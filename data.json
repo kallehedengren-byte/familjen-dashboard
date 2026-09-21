@@ -1,6 +1,9 @@
 {
-  "updated": "2026-09-20T11:13:16+02:00",
+  "updated": "2026-09-21T23:17:05+02:00",
   "weekLabel": "v. 39 · 21–27 september 2026",
+  "weekStart": "2026-09-21",
+  "weekEnd": "2026-09-27",
+  "timezone": "Europe/Stockholm",
   "family": [
     "Kalle",
     "Ebba",
@@ -8,6 +11,90 @@
     "Edvin",
     "Maj"
   ],
+  "today": {
+    "date": "2026-09-21",
+    "weekday": "Mån",
+    "weekdayLong": "måndag"
+  },
+  "weather": {
+    "location": "Pershagen / Södertälje",
+    "lat": 59.05,
+    "lon": 17.66,
+    "source": "Open-Meteo",
+    "updated": "2026-09-21T23:17:05+02:00",
+    "days": [
+      {
+        "date": "2026-09-21",
+        "weekday": "Mån",
+        "tempMax": 15,
+        "tempMin": 9,
+        "summary": "Lätt duggregn",
+        "icon": "🌦️",
+        "precipMm": 0.3,
+        "weatherCode": 51
+      },
+      {
+        "date": "2026-09-22",
+        "weekday": "Tis",
+        "tempMax": 17,
+        "tempMin": 6,
+        "summary": "Mestadels klart",
+        "icon": "🌤️",
+        "precipMm": 0.0,
+        "weatherCode": 1
+      },
+      {
+        "date": "2026-09-23",
+        "weekday": "Ons",
+        "tempMax": 18,
+        "tempMin": 6,
+        "summary": "Mulet",
+        "icon": "☁️",
+        "precipMm": 0.0,
+        "weatherCode": 3
+      },
+      {
+        "date": "2026-09-24",
+        "weekday": "Tor",
+        "tempMax": 14,
+        "tempMin": 6,
+        "summary": "Lätt duggregn",
+        "icon": "🌦️",
+        "precipMm": 0.3,
+        "weatherCode": 51
+      },
+      {
+        "date": "2026-09-25",
+        "weekday": "Fre",
+        "tempMax": 15,
+        "tempMin": 10,
+        "summary": "Lätta skurar",
+        "icon": "🌦️",
+        "precipMm": 6.2,
+        "weatherCode": 80
+      },
+      {
+        "date": "2026-09-26",
+        "weekday": "Lör",
+        "tempMax": 15,
+        "tempMin": 9,
+        "summary": "Lätt duggregn",
+        "icon": "🌦️",
+        "precipMm": 0.3,
+        "weatherCode": 51
+      },
+      {
+        "date": "2026-09-27",
+        "weekday": "Sön",
+        "tempMax": 14,
+        "tempMin": 8,
+        "summary": "Lätt duggregn",
+        "icon": "🌦️",
+        "precipMm": 0.3,
+        "weatherCode": 51
+      }
+    ]
+  },
   "homeMeals": {
     "source": "Veckans Matsedel",
     "days": [
@@ -47,13 +134,14 @@
         "meal": "Köttbullar med potatis, brunsås och lingon"
       }
     ],
-    "notes": "Inköpslista i Google Keep: Inköpslista 21–27 sep"
+    "notes": "Inköpslista finns i dashboarden (sparas på plattan)."
   },
   "schoolMeals": {
     "status": "ok",
     "school": "Pershagens grundskola",
     "source": "skolmaten.se",
-    "note": "Södertälje kommun · Pershagens grundskola (v.39). Tor=studiedag.",
+    "fetchedAt": "2026-09-21T23:17:05+02:00",
+    "note": "Södertälje kommun · Pershagens grundskola (v.39). Tor = studiedag.",
     "days": [
       {
         "date": "2026-09-21",
@@ -73,7 +161,8 @@
       {
         "date": "2026-09-24",
         "weekday": "Tor",
-        "meal": "Studiedag – endast fritids / Kökets val"
+        "meal": "Studiedag – endast fritids / Kökets val",
+        "studiedag": true
       },
       {
         "date": "2026-09-25",
@@ -100,6 +189,7 @@
       "title": "Föräldramöte förskolan",
       "who": "Ebba",
       "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com",
       "flag": "krock"
     },
     {
@@ -109,6 +199,7 @@
       "title": "Nils innebandy – Pershagen",
       "who": "Nils",
       "cal": "Family",
+      "source": "family14584848341888094170@group.calendar.google.com",
       "flag": "krock"
     },
     {
@@ -117,7 +208,8 @@
       "end": "09:00",
       "title": "Edvin orientering Stockholm (matlåda)",
       "who": "Edvin",
-      "cal": "Ebba"
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
     },
     {
       "date": "2026-09-23",
@@ -125,7 +217,8 @@
       "end": "15:00",
       "title": "Kyrkis",
       "who": "Familj",
-      "cal": "Ebba"
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
     },
     {
       "date": "2026-09-23",
@@ -133,7 +226,8 @@
       "end": "18:30",
       "title": "Nils innebandy – Östertälje",
       "who": "Nils",
-      "cal": "Family"
+      "cal": "Family",
+      "source": "family14584848341888094170@group.calendar.google.com"
     },
     {
       "date": "2026-09-24",
@@ -141,7 +235,8 @@
       "end": "08:00",
       "title": "Studiedag – fritids öppet",
       "who": "Skola",
-      "cal": "Ebba"
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
     },
     {
       "date": "2026-09-24",
@@ -149,7 +244,8 @@
       "end": "11:30",
       "title": "Hemstäd",
       "who": "Hem",
-      "cal": "Ebba"
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
     },
     {
       "date": "2026-09-24",
@@ -157,7 +253,8 @@
       "end": "19:30",
       "title": "Nils fotboll",
       "who": "Nils",
-      "cal": "Ebba"
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
     },
     {
       "date": "2026-09-25",
@@ -165,7 +262,8 @@
       "end": "18:00",
       "title": "Nils H – Kiosken Pershagen",
       "who": "Nils",
-      "cal": "Family"
+      "cal": "Family",
+      "source": "family14584848341888094170@group.calendar.google.com"
     },
     {
       "date": "2026-09-26",
@@ -173,7 +271,18 @@
       "end": "10:30",
       "title": "Nils fotbollsträning",
       "who": "Nils",
-      "cal": "Family"
+      "cal": "Family",
+      "source": "family14584848341888094170@group.calendar.google.com"
+    },
+    {
+      "date": "2026-09-26",
+      "time": "12:00",
+      "end": "20:00",
+      "title": "Oktoberfest Kallfors?",
+      "who": "Kalle",
+      "cal": "Kalle",
+      "source": "kallehedengren@gmail.com",
+      "flag": "krock"
     },
     {
       "date": "2026-09-26",
@@ -181,7 +290,62 @@
       "end": "15:00",
       "title": "Kalas för Maj",
       "who": "Maj",
-      "cal": "Ebba"
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com",
+      "flag": "krock"
     }
+  ],
+  "alerts": [
+    {
+      "type": "krock",
+      "text": "Krock Mån 21/09: Föräldramöte förskolan (16:45) överlappar Nils innebandy – Pershagen (17:00).",
+      "date": "2026-09-21",
+      "times": "16:45–17:45 / 17:00–18:30",
+      "titles": [
+        "Föräldramöte förskolan",
+        "Nils innebandy – Pershagen"
+      ]
+    },
+    {
+      "type": "krock",
+      "text": "Krock Lör 26/09: Oktoberfest Kallfors? (12:00) överlappar Kalas för Maj (14:00).",
+      "date": "2026-09-26",
+      "times": "12:00–20:00 / 14:00–15:00",
+      "titles": [
+        "Oktoberfest Kallfors?",
+        "Kalas för Maj"
+      ]
+    },
+    {
+      "type": "info",
+      "text": "Studiedag torsdag 24/9 – endast fritids (Pershagens grundskola).",
+      "date": "2026-09-24"
+    }
+  ],
+  "shoppingList": [
+    "Korv (stroganoff)",
+    "Ris",
+    "Kyckling",
+    "Potatis",
+    "Rotfrukter",
+    "Spaghetti",
+    "Köttfärs",
+    "Fisk (gratäng)",
+    "Ärtor",
+    "Tacoskal / tortillor",
+    "Taco-krydda & tillbehör",
+    "Pizzadeg / tomatsås / ost",
+    "Köttbullar",
+    "Brunsås",
+    "Lingonsylt",
+    "Mjölk",
+    "Smör",
+    "Bröd"
+  ],
+  "calendarsSynced": [
+    "kallehedengren@gmail.com",
+    "family14584848341888094170@group.calendar.google.com",
+    "ebbabjorneman2015@gmail.com",
+    "ebjorneman@gmail.com (tom v.39)"
   ]
 }

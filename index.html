@@ -26,6 +26,8 @@
     --sky-soft: #e0f2fe;
     --flag: #b91c1c;
     --flag-soft: #fee2e2;
+    --info: #1d4ed8;
+    --info-soft: #dbeafe;
     --radius: 18px;
     --shadow: 0 10px 30px rgba(28, 25, 23, 0.06);
     font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -73,6 +75,95 @@
     display: grid;
     gap: 18px;
   }
+  .today-panel {
+    background: linear-gradient(135deg, #0f766e 0%, #0e7490 55%, #0369a1 100%);
+    color: #f0fdfa;
+    border-radius: calc(var(--radius) + 4px);
+    padding: 20px 22px;
+    box-shadow: 0 16px 40px rgba(15, 118, 110, 0.25);
+    display: grid;
+    gap: 16px;
+  }
+  .today-panel h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+  .today-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .today-weather {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 10px 14px;
+  }
+  .today-weather .icon { font-size: 2rem; line-height: 1; }
+  .today-weather .temps { font-size: 1.25rem; font-weight: 600; }
+  .today-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 12px;
+  }
+  @media (max-width: 800px) {
+    .today-grid { grid-template-columns: 1fr; }
+  }
+  .today-box {
+    background: rgba(255,255,255,0.14);
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+  .today-box .lbl {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.8;
+    margin-bottom: 6px;
+  }
+  .today-box .val { font-size: 0.95rem; line-height: 1.4; }
+  .today-events { display: flex; flex-direction: column; gap: 6px; }
+  .today-ev {
+    font-size: 0.9rem;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .today-ev:last-child { border-bottom: 0; }
+  .today-ev.krock { color: #fecaca; font-weight: 600; }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .btn {
+    appearance: none;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    touch-action: manipulation;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+  .btn.warm {
+    background: var(--warm);
+    border-color: var(--warm);
+    color: white;
+  }
   .grid-days {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -93,10 +184,12 @@
     gap: 10px;
   }
   .day.today { outline: 2px solid var(--accent); }
+  .day.selected { outline: 2px solid var(--warm); }
   .day-head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    cursor: pointer;
   }
   .day-head strong { font-size: 1.05rem; }
   .day-head span { color: var(--muted); font-size: 0.8rem; }
@@ -108,7 +201,7 @@
     font-size: 0.88rem;
     line-height: 1.35;
   }
-  .meal .label {
+  .meal .label, .school .label {
     display: block;
     font-size: 0.7rem;
     text-transform: uppercase;
@@ -124,13 +217,9 @@
     font-size: 0.82rem;
     line-height: 1.35;
   }
-  .school .label {
-    display: block;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.75;
-    margin-bottom: 4px;
+  .school.studiedag {
+    background: #fef3c7;
+    color: #92400e;
   }
   .events { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
   .ev {
@@ -149,20 +238,28 @@
     font-size: 0.7rem;
     margin-top: 4px;
   }
+  .alerts { display: grid; gap: 10px; }
   .banner {
-    background: var(--flag-soft);
-    color: #7f1d1d;
-    border: 1px solid #fecaca;
     border-radius: var(--radius);
     padding: 14px 16px;
     font-size: 0.92rem;
   }
+  .banner.krock {
+    background: var(--flag-soft);
+    color: #7f1d1d;
+    border: 1px solid #fecaca;
+  }
+  .banner.info {
+    background: var(--info-soft);
+    color: #1e3a8a;
+    border: 1px solid #bfdbfe;
+  }
   .panels {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
   }
-  @media (max-width: 800px) { .panels { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .panels { grid-template-columns: 1fr; } }
   .card {
     background: var(--card);
     border: 1px solid var(--line);
@@ -174,8 +271,52 @@
     margin: 0 0 12px;
     font-size: 1.05rem;
   }
-  ul { margin: 0; padding-left: 18px; color: var(--muted); }
+  ul.plain { margin: 0; padding-left: 18px; color: var(--muted); }
   li { margin: 6px 0; }
+  .shop-list { list-style: none; padding: 0; margin: 0; }
+  .shop-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 8px 4px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.95rem;
+  }
+  .shop-list li.done span { text-decoration: line-through; color: var(--muted); }
+  .shop-list input[type=checkbox] {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--accent);
+  }
+  .shop-add {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .shop-add input {
+    flex: 1;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+  .weather-week {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .wx-day {
+    min-width: 72px;
+    text-align: center;
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px 6px;
+    font-size: 0.78rem;
+  }
+  .wx-day .ic { font-size: 1.3rem; }
   footer {
     max-width: 1100px;
     margin: 0 auto;
@@ -183,8 +324,29 @@
     color: var(--muted);
     font-size: 0.8rem;
   }
-
-  /* TV / tablet */
+  dialog {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0;
+    max-width: 420px;
+    width: calc(100% - 32px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  }
+  dialog::backdrop { background: rgba(28,25,23,0.35); }
+  .dlg {
+    padding: 20px;
+    display: grid;
+    gap: 12px;
+  }
+  .dlg h3 { margin: 0; }
+  .dlg textarea, .dlg input, .dlg select {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font: inherit;
+  }
+  .dlg-actions { display: flex; gap: 8px; justify-content: flex-end; }
   @media (min-width: 1000px) {
     h1 { font-size: 2.2rem; }
     .day { min-height: 260px; padding: 16px; }
@@ -202,75 +364,241 @@
     <div class="pill" id="updated">—</div>
   </header>
   <main>
-    <div class="banner" id="alerts" hidden></div>
+    <section class="today-panel" id="todayPanel" aria-label="Idag">
+      <div class="today-top">
+        <div>
+          <h2 id="todayTitle">Idag</h2>
+          <div class="sub" style="color:#ccfbf1" id="todayDateSub"></div>
+        </div>
+        <div class="today-weather" id="todayWeather">
+          <div class="icon">🌡️</div>
+          <div>
+            <div class="temps">—</div>
+            <div style="opacity:0.85;font-size:0.85rem">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="today-grid">
+        <div class="today-box">
+          <div class="lbl">Hemma</div>
+          <div class="val" id="todayHome">—</div>
+        </div>
+        <div class="today-box">
+          <div class="lbl">Skola</div>
+          <div class="val" id="todaySchool">—</div>
+        </div>
+        <div class="today-box">
+          <div class="lbl">Aktiviteter</div>
+          <div class="today-events" id="todayEvents"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="btn warm" type="button" id="btnMeal">Byt middagsrätt</button>
+      <button class="btn primary" type="button" id="btnEvent">Lägg till aktivitet</button>
+      <button class="btn" type="button" id="btnNotify">Aktivera notiser</button>
+    </div>
+
+    <div class="alerts" id="alerts"></div>
     <section class="grid-days" id="days"></section>
     <section class="panels">
       <div class="card">
+        <h2>Inköpslista</h2>
+        <ul class="shop-list" id="shopList"></ul>
+        <div class="shop-add">
+          <input id="shopInput" type="text" placeholder="Lägg till…" enterkeyhint="done" />
+          <button class="btn primary" type="button" id="shopAddBtn">Lägg till</button>
+        </div>
+        <p class="sub" style="margin-top:10px">Sparas lokalt på plattan.</p>
+      </div>
+      <div class="card">
         <h2>Hemmamatsedel</h2>
-        <ul id="mealList"></ul>
+        <ul class="plain" id="mealList"></ul>
         <p class="sub" id="mealNote" style="margin-top:12px"></p>
       </div>
       <div class="card">
         <h2>Skolmatsedel · Pershagen</h2>
-        <ul id="schoolList"></ul>
-        <p class="sub" id="schoolNote" style="margin-top:12px">Väntar på kommun/skola.</p>
+        <ul class="plain" id="schoolList"></ul>
+        <p class="sub" id="schoolNote" style="margin-top:12px"></p>
+        <h2 style="margin-top:18px">Väder</h2>
+        <div class="weather-week" id="weatherWeek"></div>
       </div>
     </section>
   </main>
-  <footer>Uppdateras från Google Calendar + Veckans Matsedel. Inte live-synkad automatiskt ännu.</footer>
+  <footer id="footer">Kalender (Google) · Skolmat (skolmaten.se) · Väder (Open-Meteo). Inköp &amp; måltidsöverridningar sparas på enheten.</footer>
+
+  <dialog id="mealDialog">
+    <form method="dialog" class="dlg" id="mealForm">
+      <h3>Byt middagsrätt</h3>
+      <label class="sub">Dag
+        <select id="mealDaySelect"></select>
+      </label>
+      <label class="sub">Ny rätt
+        <textarea id="mealText" rows="3" required></textarea>
+      </label>
+      <div class="dlg-actions">
+        <button class="btn" value="cancel" type="submit">Avbryt</button>
+        <button class="btn primary" id="mealSave" value="default" type="submit">Spara</button>
+      </div>
+    </form>
+  </dialog>
+
 <script>
-const DAY_ORDER = ["Mån","Tis","Ons","Tor","Fre","Lör","Sön"];
+const LS_SHOP = "familjen-shop-v1";
+const LS_MEALS = "familjen-meal-overrides-v1";
+const LS_NOTIFIED = "familjen-notified-v1";
+
+let DATA = null;
+let selectedDate = null;
+
+function stockholmToday() {
+  return new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Stockholm" });
+}
 function fmtUpdated(iso) {
   try {
-    return "Uppdaterad " + new Date(iso).toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short" });
+    return "Uppdaterad " + new Date(iso).toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Stockholm" });
   } catch { return iso; }
 }
-function dateKey(d) { return d; }
-async function load() {
-  const res = await fetch("./data.json?t=" + Date.now());
-  const data = await res.json();
-  document.getElementById("weekLabel").textContent = data.weekLabel;
-  document.getElementById("updated").textContent = fmtUpdated(data.updated);
+function loadMealOverrides() {
+  try { return JSON.parse(localStorage.getItem(LS_MEALS) || "{}"); } catch { return {}; }
+}
+function saveMealOverrides(o) {
+  localStorage.setItem(LS_MEALS, JSON.stringify(o));
+}
+function homeMealFor(date) {
+  const ov = loadMealOverrides();
+  if (ov[date]) return ov[date];
+  return DATA.homeMeals?.days?.find(d => d.date === date)?.meal || "—";
+}
+function schoolMealFor(date) {
+  return DATA.schoolMeals?.days?.find(d => d.date === date) || null;
+}
 
-  const mealsByDate = Object.fromEntries((data.homeMeals?.days || []).map(d => [d.date, d]));
-  const eventsByDate = {};
-  for (const e of data.events || []) {
-    (eventsByDate[e.date] ||= []).push(e);
+function loadShop() {
+  try {
+    const raw = localStorage.getItem(LS_SHOP);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  const seed = (DATA.shoppingList || []).map(text => ({ text, done: false }));
+  saveShop(seed);
+  return seed;
+}
+function saveShop(items) {
+  localStorage.setItem(LS_SHOP, JSON.stringify(items));
+}
+function renderShop() {
+  const items = loadShop();
+  const ul = document.getElementById("shopList");
+  ul.innerHTML = "";
+  items.forEach((it, idx) => {
+    const li = document.createElement("li");
+    if (it.done) li.classList.add("done");
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = !!it.done;
+    cb.addEventListener("change", () => {
+      items[idx].done = cb.checked;
+      saveShop(items);
+      renderShop();
+    });
+    const span = document.createElement("span");
+    span.textContent = it.text;
+    span.style.flex = "1";
+    const del = document.createElement("button");
+    del.className = "btn";
+    del.type = "button";
+    del.textContent = "×";
+    del.style.padding = "4px 10px";
+    del.addEventListener("click", () => {
+      items.splice(idx, 1);
+      saveShop(items);
+      renderShop();
+    });
+    li.append(cb, span, del);
+    ul.appendChild(li);
+  });
+}
+
+function renderAlerts() {
+  const root = document.getElementById("alerts");
+  root.innerHTML = "";
+  const list = DATA.alerts || [];
+  for (const a of list) {
+    const el = document.createElement("div");
+    el.className = "banner " + (a.type === "krock" ? "krock" : "info");
+    el.textContent = (a.type === "krock" ? "⚠️ " : "ℹ️ ") + a.text;
+    root.appendChild(el);
+  }
+}
+
+function renderToday() {
+  const today = stockholmToday();
+  const dayMeta = DATA.homeMeals?.days?.find(d => d.date === today) || DATA.today || {};
+  const long = dayMeta.weekdayLong || dayMeta.weekday || "";
+  document.getElementById("todayTitle").textContent = "Idag · " + (long || today);
+  document.getElementById("todayDateSub").textContent = today;
+
+  const wx = (DATA.weather?.days || []).find(d => d.date === today) || DATA.weather?.days?.[0];
+  const wxEl = document.getElementById("todayWeather");
+  if (wx) {
+    wxEl.innerHTML = `<div class="icon">${wx.icon || "🌡️"}</div>
+      <div><div class="temps">${wx.tempMax}° / ${wx.tempMin}°</div>
+      <div style="opacity:0.85;font-size:0.85rem">${wx.summary} · ${DATA.weather?.location || ""}</div></div>`;
   }
 
-  const alerts = [];
-  for (const e of data.events || []) {
-    if (e.flag === "krock") alerts.push(`${e.date.slice(5)} ${e.time} · ${e.title}`);
-  }
-  const alertEl = document.getElementById("alerts");
-  if (alerts.length) {
-    alertEl.hidden = false;
-    alertEl.textContent = "Krock måndag: föräldramöte 16:45 överlappar Nils innebandy 17:00 i Pershagen.";
-  }
+  document.getElementById("todayHome").textContent = homeMealFor(today);
+  const sm = schoolMealFor(today);
+  document.getElementById("todaySchool").textContent = sm?.meal || "—";
 
-  // Build Mon–Sun from meal days (canonical week)
+  const evRoot = document.getElementById("todayEvents");
+  evRoot.innerHTML = "";
+  const todays = (DATA.events || []).filter(e => e.date === today);
+  if (!todays.length) {
+    evRoot.innerHTML = `<div class="today-ev">Inga aktiviteter</div>`;
+  } else {
+    for (const e of todays) {
+      const div = document.createElement("div");
+      div.className = "today-ev" + (e.flag === "krock" ? " krock" : "");
+      div.textContent = `${e.time}–${e.end || ""} · ${e.title} (${e.who || ""})`;
+      evRoot.appendChild(div);
+    }
+  }
+}
+
+function renderDays() {
   const daysRoot = document.getElementById("days");
   daysRoot.innerHTML = "";
-  const today = new Date().toISOString().slice(0,10);
-  for (const m of data.homeMeals.days) {
+  const today = stockholmToday();
+  const eventsByDate = {};
+  for (const e of DATA.events || []) (eventsByDate[e.date] ||= []).push(e);
+
+  for (const m of DATA.homeMeals.days) {
     const card = document.createElement("article");
-    card.className = "day" + (m.date === today ? " today" : "");
+    card.className = "day"
+      + (m.date === today ? " today" : "")
+      + (m.date === selectedDate ? " selected" : "");
     const head = document.createElement("div");
     head.className = "day-head";
     head.innerHTML = `<strong>${m.weekday}</strong><span>${m.date.slice(8)}.${m.date.slice(5,7)}</span>`;
+    head.title = "Välj dag för Byt middagsrätt";
+    head.addEventListener("click", () => {
+      selectedDate = m.date;
+      renderDays();
+    });
     card.appendChild(head);
 
     const meal = document.createElement("div");
     meal.className = "meal";
-    meal.innerHTML = `<span class="label">Hemma</span>${m.meal}`;
+    const mealText = homeMealFor(m.date);
+    const overridden = !!loadMealOverrides()[m.date];
+    meal.innerHTML = `<span class="label">Hemma${overridden ? " · ändrad" : ""}</span>${mealText}`;
     card.appendChild(meal);
 
     const school = document.createElement("div");
-    school.className = "school";
-    const schoolMeal = data.schoolMeals?.status === "pending"
-      ? "snart"
-      : (data.schoolMeals?.days?.find(x => x.date === m.date)?.meal || "—");
-    school.innerHTML = `<span class="label">Skola</span>${schoolMeal}`;
+    const sm = schoolMealFor(m.date);
+    school.className = "school" + (sm?.studiedag ? " studiedag" : "");
+    school.innerHTML = `<span class="label">Skola</span>${sm?.meal || "—"}`;
     card.appendChild(school);
 
     const evWrap = document.createElement("div");
@@ -279,7 +607,7 @@ async function load() {
     if (!list.length) {
       const empty = document.createElement("div");
       empty.className = "ev";
-      empty.innerHTML = `<div class="t">Inga aktiviteter i kalendern</div>`;
+      empty.innerHTML = `<div class="t">Inga aktiviteter</div>`;
       evWrap.appendChild(empty);
     } else {
       for (const e of list) {
@@ -292,21 +620,143 @@ async function load() {
     card.appendChild(evWrap);
     daysRoot.appendChild(card);
   }
+}
 
-  // Also show Sunday 20 if in events but not in meal week? skip — week starts Mon
-
+function renderLists() {
   const mealList = document.getElementById("mealList");
-  mealList.innerHTML = data.homeMeals.days.map(d => `<li><strong>${d.weekday}:</strong> ${d.meal}</li>`).join("");
-  document.getElementById("mealNote").textContent = data.homeMeals.notes || "";
+  mealList.innerHTML = DATA.homeMeals.days.map(d => {
+    const text = homeMealFor(d.date);
+    return `<li><strong>${d.weekday}:</strong> ${text}</li>`;
+  }).join("");
+  document.getElementById("mealNote").textContent = DATA.homeMeals.notes || "";
+
   const schoolList = document.getElementById("schoolList");
-  const schoolDays = data.schoolMeals?.days || [];
-  if (data.schoolMeals?.status === "pending" || !schoolDays.length) {
+  const schoolDays = DATA.schoolMeals?.days || [];
+  if (DATA.schoolMeals?.status === "pending" || !schoolDays.length) {
     schoolList.innerHTML = "<li>Ingen skolmatsedel ännu</li>";
   } else {
-    schoolList.innerHTML = schoolDays.map(d => `<li><strong>${d.weekday}:</strong> ${d.meal}</li>`).join("");
+    schoolList.innerHTML = schoolDays.map(d =>
+      `<li><strong>${d.weekday}:</strong> ${d.meal}${d.studiedag ? " 📌" : ""}</li>`
+    ).join("");
   }
-  document.getElementById("schoolNote").textContent = data.schoolMeals?.note || "";
+  document.getElementById("schoolNote").textContent = DATA.schoolMeals?.note || "";
+
+  const wxRoot = document.getElementById("weatherWeek");
+  wxRoot.innerHTML = (DATA.weather?.days || []).map(d =>
+    `<div class="wx-day"><div>${d.weekday}</div><div class="ic">${d.icon}</div><div>${d.tempMax}°/${d.tempMin}°</div></div>`
+  ).join("");
 }
+
+function openMealDialog() {
+  const sel = document.getElementById("mealDaySelect");
+  sel.innerHTML = DATA.homeMeals.days.map(d =>
+    `<option value="${d.date}" ${(selectedDate || stockholmToday()) === d.date ? "selected" : ""}>${d.weekday} ${d.date.slice(8)}.${d.date.slice(5,7)}</option>`
+  ).join("");
+  const date = sel.value;
+  document.getElementById("mealText").value = homeMealFor(date);
+  document.getElementById("mealDialog").showModal();
+}
+
+function setupMealDialog() {
+  document.getElementById("mealDaySelect").addEventListener("change", (e) => {
+    document.getElementById("mealText").value = homeMealFor(e.target.value);
+  });
+  document.getElementById("mealForm").addEventListener("submit", (e) => {
+    const submitter = e.submitter;
+    if (submitter && submitter.id === "mealSave") {
+      e.preventDefault();
+      const date = document.getElementById("mealDaySelect").value;
+      const text = document.getElementById("mealText").value.trim();
+      if (!text) return;
+      const ov = loadMealOverrides();
+      ov[date] = text;
+      saveMealOverrides(ov);
+      selectedDate = date;
+      document.getElementById("mealDialog").close();
+      renderToday();
+      renderDays();
+      renderLists();
+    }
+  });
+}
+
+function addCalendarEvent() {
+  const date = selectedDate || stockholmToday();
+  const title = prompt("Titel på aktiviteten?", "");
+  if (title === null) return;
+  const start = `${date}T17:00:00`;
+  const end = `${date}T18:00:00`;
+  const url = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+    + "&text=" + encodeURIComponent(title || "Ny aktivitet")
+    + "&dates=" + start.replace(/[-:]/g, "") + "/" + end.replace(/[-:]/g, "")
+    + "&ctz=Europe/Stockholm";
+  window.open(url, "_blank", "noopener");
+}
+
+async function maybeNotify() {
+  if (!("Notification" in window)) return;
+  const key = (DATA.updated || "") + "|" + (DATA.alerts || []).map(a => a.text).join("|");
+  const seen = localStorage.getItem(LS_NOTIFIED);
+  if (seen === key) return;
+  if (Notification.permission !== "granted") return;
+  for (const a of DATA.alerts || []) {
+    try {
+      new Notification(a.type === "krock" ? "Familjen · krock" : "Familjen · info", {
+        body: a.text,
+        tag: "familjen-" + (a.date || "") + "-" + a.type,
+      });
+    } catch {}
+  }
+  localStorage.setItem(LS_NOTIFIED, key);
+}
+
+async function requestNotify() {
+  if (!("Notification" in window)) {
+    alert("Notiser stöds inte i den här webbläsaren.");
+    return;
+  }
+  const perm = await Notification.requestPermission();
+  if (perm === "granted") {
+    localStorage.removeItem(LS_NOTIFIED);
+    await maybeNotify();
+    alert("Notiser aktiverade.");
+  } else {
+    alert("Notiser nekades.");
+  }
+}
+
+async function load() {
+  const res = await fetch("./data.json?t=" + Date.now());
+  DATA = await res.json();
+  if (!selectedDate) selectedDate = stockholmToday();
+  document.getElementById("weekLabel").textContent = DATA.weekLabel;
+  document.getElementById("updated").textContent = fmtUpdated(DATA.updated);
+  renderToday();
+  renderAlerts();
+  renderDays();
+  renderLists();
+  renderShop();
+  maybeNotify();
+}
+
+document.getElementById("btnMeal").addEventListener("click", openMealDialog);
+document.getElementById("btnEvent").addEventListener("click", addCalendarEvent);
+document.getElementById("btnNotify").addEventListener("click", requestNotify);
+document.getElementById("shopAddBtn").addEventListener("click", () => {
+  const input = document.getElementById("shopInput");
+  const text = input.value.trim();
+  if (!text) return;
+  const items = loadShop();
+  items.push({ text, done: false });
+  saveShop(items);
+  input.value = "";
+  renderShop();
+});
+document.getElementById("shopInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("shopAddBtn").click();
+});
+setupMealDialog();
+
 load().catch(err => {
   document.getElementById("weekLabel").textContent = "Kunde inte ladda data.json";
   console.error(err);
@@ -317,7 +767,6 @@ load().catch(err => {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').catch(console.error);
 }
-// refresh data every 30 min when open
 setInterval(() => { if (typeof load === 'function') load(); }, 30 * 60 * 1000);
 </script>
 </body>
