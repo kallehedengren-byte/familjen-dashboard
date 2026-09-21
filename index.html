@@ -273,34 +273,6 @@
   }
   ul.plain { margin: 0; padding-left: 18px; color: var(--muted); }
   li { margin: 6px 0; }
-  .shop-list { list-style: none; padding: 0; margin: 0; }
-  .shop-list li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0;
-    padding: 8px 4px;
-    border-bottom: 1px solid var(--line);
-    font-size: 0.95rem;
-  }
-  .shop-list li.done span { text-decoration: line-through; color: var(--muted); }
-  .shop-list input[type=checkbox] {
-    width: 22px;
-    height: 22px;
-    accent-color: var(--accent);
-  }
-  .shop-add {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .shop-add input {
-    flex: 1;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 10px 12px;
-    font-size: 0.95rem;
-  }
   .weather-week {
     display: flex;
     gap: 8px;
@@ -539,15 +511,6 @@
     <section class="grid-days" id="days"></section>
     <section class="panels">
       <div class="card">
-        <h2>Inköpslista</h2>
-        <ul class="shop-list" id="shopList"></ul>
-        <div class="shop-add">
-          <input id="shopInput" type="text" placeholder="Lägg till…" enterkeyhint="done" />
-          <button class="btn primary" type="button" id="shopAddBtn">Lägg till</button>
-        </div>
-        <p class="sub" style="margin-top:10px">Sparas lokalt på plattan.</p>
-      </div>
-      <div class="card">
         <h2>Hemmamatsedel</h2>
         <ul class="plain" id="mealList"></ul>
         <p class="sub" id="mealNote" style="margin-top:12px"></p>
@@ -561,7 +524,7 @@
       </div>
     </section>
   </main>
-  <footer id="footer">Kalender (Google) · Skolmat (skolmaten.se) · Väder (Open-Meteo) · Spotpris (elprisetjustnu.se). Inköp &amp; måltidsöverridningar sparas på enheten.</footer>
+  <footer id="footer">Kalender (Google) · Skolmat (skolmaten.se) · Väder (Open-Meteo) · Spotpris (elprisetjustnu.se). Måltidsöverridningar sparas på enheten.</footer>
 
   <dialog id="mealDialog">
     <form method="dialog" class="dlg" id="mealForm">
@@ -580,7 +543,6 @@
   </dialog>
 
 <script>
-const LS_SHOP = "familjen-shop-v1";
 const LS_MEALS = "familjen-meal-overrides-v1";
 const LS_NOTIFIED = "familjen-notified-v1";
 
@@ -610,81 +572,7 @@ function schoolMealFor(date) {
   return DATA.schoolMeals?.days?.find(d => d.date === date) || null;
 }
 
-function loadShop() {
-  try {
-    const raw = localStorage.getItem(LS_SHOP);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  const seed = (DATA.shoppingList || []).map(text => ({ text, done: false }));
-  saveShop(seed);
-  return seed;
-}
-function saveShop(items) {
-  localStorage.setItem(LS_SHOP, JSON.stringify(items));
-}
-function renderShop() {
-  const items = loadShop();
-  const ul = document.getElementById("shopList");
-  ul.innerHTML = "";
-  items.forEach((it, idx) => {
-    const li = document.createElement("li");
-    if (it.done) li.classList.add("done");
-    const cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.checked = !!it.done;
-    cb.addEventListener("change", () => {
-      items[idx].done = cb.checked;
-      saveShop(items);
-      renderShop();
-    });
-    const span = document.createElement("span");
-    span.textContent = it.text;
-    span.style.flex = "1";
-    const del = document.createElement("button");
-    del.className = "btn";
-    del.type = "button";
-    del.textContent = "×";
-    del.style.padding = "4px 10px";
-    del.addEventListener("click", () => {
-      items.splice(idx, 1);
-      saveShop(items);
-      renderShop();
-    });
-    li.append(cb, span, del);
-    ul.appendChild(li);
-  });
-}
-
-function renderAlerts() {
-  const root = document.getElementById("alerts");
-  root.innerHTML = "";
-  const list = DATA.alerts || [];
-  for (const a of list) {
-    const el = document.createElement("div");
-    el.className = "banner " + (a.type === "krock" ? "krock" : "info");
-    el.textContent = (a.type === "krock" ? "⚠️ " : "ℹ️ ") + a.text;
-    root.appendChild(el);
-  }
-}
-
-function renderToday() {
-  const today = stockholmToday();
-  const dayMeta = DATA.homeMeals?.days?.find(d => d.date === today) || DATA.today || {};
-  const long = dayMeta.weekdayLong || dayMeta.weekday || "";
-  document.getElementById("todayTitle").textContent = "Idag · " + (long || today);
-  document.getElementById("todayDateSub").textContent = today;
-
-  const wx = (DATA.weather?.days || []).find(d => d.date === today) || DATA.weather?.days?.[0];
-  const wxEl = document.getElementById("todayWeather");
-  if (wx) {
-    wxEl.innerHTML = `<div class="icon">${wx.icon || "🌡️"}</div>
-      <div><div class="temps">${wx.tempMax}° / ${wx.tempMin}°</div>
-      <div style="opacity:0.85;font-size:0.85rem">${wx.summary} · ${DATA.weather?.location || ""}</div></div>`;
-  }
-
-  document.getElementById("todayHome").textContent = homeMealFor(today);
-  const sm = schoolMealFor(today);
-  document.getElementById("todaySchool").textContent = sm?.meal || "—";
+function t.getElementById("todaySchool").textContent = sm?.meal || "—";
 
   const evRoot = document.getElementById("todayEvents");
   evRoot.innerHTML = "";
@@ -971,26 +859,12 @@ async function load() {
   renderAlerts();
   renderDays();
   renderLists();
-  renderShop();
   maybeNotify();
 }
 
 document.getElementById("btnMeal").addEventListener("click", openMealDialog);
 document.getElementById("btnEvent").addEventListener("click", addCalendarEvent);
 document.getElementById("btnNotify").addEventListener("click", requestNotify);
-document.getElementById("shopAddBtn").addEventListener("click", () => {
-  const input = document.getElementById("shopInput");
-  const text = input.value.trim();
-  if (!text) return;
-  const items = loadShop();
-  items.push({ text, done: false });
-  saveShop(items);
-  input.value = "";
-  renderShop();
-});
-document.getElementById("shopInput").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") document.getElementById("shopAddBtn").click();
-});
 setupMealDialog();
 
 load().catch(err => {
