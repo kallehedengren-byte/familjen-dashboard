@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Familjen – veckodashboard</title>
+<style>
+  :root {
+    --bg: #f4f0e8;
+    --card: #fffdf8;
+    --ink: #1c1917;
+    --muted: #78716c;
+    --line: #e7e0d5;
+    --accent: #0f766e;
+    --accent-soft: #ccfbf1;
+    --warm: #c2410c;
+    --warm-soft: #ffedd5;
+    --sky: #0369a1;
+    --sky-soft: #e0f2fe;
+    --flag: #b91c1c;
+    --flag-soft: #fee2e2;
+    --radius: 18px;
+    --shadow: 0 10px 30px rgba(28, 25, 23, 0.06);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #d9f99d55, transparent),
+      radial-gradient(900px 500px at 100% 0%, #99f6e455, transparent),
+      var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 18px;
+  }
+  header {
+    padding: 28px 24px 8px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    align-items: end;
+    justify-content: space-between;
+  }
+  h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    letter-spacing: -0.03em;
+  }
+  .sub { color: var(--muted); margin-top: 4px; font-size: 0.95rem; }
+  .pill {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    box-shadow: var(--shadow);
+  }
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 24px 48px;
+    display: grid;
+    gap: 18px;
+  }
+  .grid-days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 12px;
+  }
+  @media (max-width: 900px) {
+    .grid-days { grid-template-columns: 1fr; }
+  }
+  .day {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .day.today { outline: 2px solid var(--accent); }
+  .day-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .day-head strong { font-size: 1.05rem; }
+  .day-head span { color: var(--muted); font-size: 0.8rem; }
+  .meal {
+    background: var(--warm-soft);
+    color: #7c2d12;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+    line-height: 1.35;
+  }
+  .meal .label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.75;
+    margin-bottom: 4px;
+  }
+  .school {
+    background: var(--sky-soft);
+    color: #0c4a6e;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+  .events { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+  .ev {
+    border-left: 3px solid var(--accent);
+    padding: 6px 0 6px 10px;
+    font-size: 0.84rem;
+  }
+  .ev.flag { border-left-color: var(--flag); }
+  .ev .t { color: var(--muted); font-size: 0.75rem; }
+  .ev .who {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: #115e59;
+    border-radius: 999px;
+    padding: 1px 8px;
+    font-size: 0.7rem;
+    margin-top: 4px;
+  }
+  .banner {
+    background: var(--flag-soft);
+    color: #7f1d1d;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 0.92rem;
+  }
+  .panels {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 800px) { .panels { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+  }
+  .card h2 {
+    margin: 0 0 12px;
+    font-size: 1.05rem;
+  }
+  ul { margin: 0; padding-left: 18px; color: var(--muted); }
+  li { margin: 6px 0; }
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 40px;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  /* TV / tablet */
+  @media (min-width: 1000px) {
+    h1 { font-size: 2.2rem; }
+    .day { min-height: 260px; padding: 16px; }
+    .meal, .school, .ev { font-size: 0.95rem; }
+  }
+  body.tv-mode { cursor: default; }
+</style>
+</head>
+<body class="tv-mode">
+  <header>
+    <div>
+      <h1>Familjen · veckan</h1>
+      <div class="sub" id="weekLabel">Laddar…</div>
+    </div>
+    <div class="pill" id="updated">—</div>
+  </header>
+  <main>
+    <div class="banner" id="alerts" hidden></div>
+    <section class="grid-days" id="days"></section>
+    <section class="panels">
+      <div class="card">
+        <h2>Hemmamatsedel</h2>
+        <ul id="mealList"></ul>
+        <p class="sub" id="mealNote" style="margin-top:12px"></p>
+      </div>
+      <div class="card">
+        <h2>Skolmatsedel</h2>
+        <p class="sub" id="schoolNote">Väntar på kommun/skola.</p>
+      </div>
+    </section>
+  </main>
+  <footer>Uppdateras från Google Calendar + Veckans Matsedel. Inte live-synkad automatiskt ännu.</footer>
+<script>window.FAMILY_DATA = {"updated": "2026-09-19T20:47:00+02:00", "weekLabel": "v. 39 · 21–27 september 2026", "family": ["Kalle", "Ebba", "Nils", "Edvin", "Maj"], "homeMeals": {"source": "Veckans Matsedel", "days": [{"date": "2026-09-21", "weekday": "Mån", "meal": "Pasta med köttfärssås"}, {"date": "2026-09-22", "weekday": "Tis", "meal": "Hamburgare med potatis och sallad"}, {"date": "2026-09-23", "weekday": "Ons", "meal": "Kyckling i ugn med potatis och grönsaker"}, {"date": "2026-09-24", "weekday": "Tor", "meal": "Fiskpinnar med potatismos och ärtor"}, {"date": "2026-09-25", "weekday": "Fre", "meal": "Tacos med köttfärs"}, {"date": "2026-09-26", "weekday": "Lör", "meal": "Hemmagjord pizza"}, {"date": "2026-09-27", "weekday": "Sön", "meal": "Köttfärslimpa med potatisgratäng och grönsaker"}], "notes": "Inköpslista i Google Keep: Inköpslista 21–27 sep"}, "schoolMeals": {"status": "ok", "school": "Pershagens grundskola", "source": "skolmaten.se", "note": "Södertälje kommun · Pershagens grundskola (v.39). Tor=studiedag.", "days": [{"date": "2026-09-21", "weekday": "Mån", "meal": "Beredskapsvecka: Biff stroganoff med saltgurka & ris / Champinjonstroganoff med ris"}, {"date": "2026-09-22", "weekday": "Tis", "meal": "Pasta alla Norma / Spansk bondomelett"}, {"date": "2026-09-23", "weekday": "Ons", "meal": "Pestobakad sejfilé med rostad potatis / Pumpapaj med rotfruktssallad"}, {"date": "2026-09-24", "weekday": "Tor", "meal": "Studiedag – endast fritids / Kökets val"}, {"date": "2026-09-25", "weekday": "Fre", "meal": "Pizzabuffé / Äpplets dag"}, {"date": "2026-09-26", "weekday": "Lör", "meal": "— (helg)"}, {"date": "2026-09-27", "weekday": "Sön", "meal": "— (helg)"}]}, "events": [{"date": "2026-09-20", "time": "14:30", "end": "15:30", "title": "Heldag med Nils", "who": "Ebba", "cal": "Ebba"}, {"date": "2026-09-21", "time": "16:45", "end": "17:45", "title": "Föräldramöte förskolan", "who": "Ebba", "cal": "Ebba", "flag": "krock"}, {"date": "2026-09-21", "time": "17:00", "end": "18:30", "title": "Nils innebandy – Pershagen", "who": "Nils", "cal": "Family", "flag": "krock"}, {"date": "2026-09-22", "time": "08:00", "end": "09:00", "title": "Edvin orientering Stockholm (matlåda)", "who": "Edvin", "cal": "Ebba"}, {"date": "2026-09-23", "time": "14:00", "end": "15:00", "title": "Kyrkis", "who": "Familj", "cal": "Ebba"}, {"date": "2026-09-23", "time": "17:00", "end": "18:30", "title": "Nils innebandy – Östertälje", "who": "Nils", "cal": "Family"}, {"date": "2026-09-24", "time": "07:00", "end": "08:00", "title": "Studiedag – fritids öppet", "who": "Skola", "cal": "Ebba"}, {"date": "2026-09-24", "time": "08:00", "end": "11:30", "title": "Hemstäd", "who": "Hem", "cal": "Ebba"}, {"date": "2026-09-24", "time": "18:00", "end": "19:30", "title": "Nils fotboll", "who": "Nils", "cal": "Ebba"}, {"date": "2026-09-25", "time": "16:30", "end": "18:00", "title": "Nils H – Kiosken Pershagen", "who": "Nils", "cal": "Family"}, {"date": "2026-09-26", "time": "14:00", "end": "15:00", "title": "Kalas för Maj", "who": "Maj", "cal": "Ebba"}, {"date": "2026-09-28", "time": "17:00", "end": "18:30", "title": "Nils innebandy – Pershagen", "who": "Nils", "cal": "Family"}]};</script>
+<script>
+const DAY_ORDER = ["Mån","Tis","Ons","Tor","Fre","Lör","Sön"];
+function fmtUpdated(iso) {
+  try {
+    return "Uppdaterad " + new Date(iso).toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short" });
+  } catch { return iso; }
+}
+function dateKey(d) { return d; }
+async function load() {
+  const data = window.FAMILY_DATA;
+  document.getElementById("weekLabel").textContent = data.weekLabel;
+  document.getElementById("updated").textContent = fmtUpdated(data.updated);
+
+  const mealsByDate = Object.fromEntries((data.homeMeals?.days || []).map(d => [d.date, d]));
+  const eventsByDate = {};
+  for (const e of data.events || []) {
+    (eventsByDate[e.date] ||= []).push(e);
+  }
+
+  const alerts = [];
+  for (const e of data.events || []) {
+    if (e.flag === "krock") alerts.push(`${e.date.slice(5)} ${e.time} · ${e.title}`);
+  }
+  const alertEl = document.getElementById("alerts");
+  if (alerts.length) {
+    alertEl.hidden = false;
+    alertEl.textContent = "Krock måndag: föräldramöte 16:45 överlappar Nils innebandy 17:00 i Pershagen.";
+  }
+
+  // Build Mon–Sun from meal days (canonical week)
+  const daysRoot = document.getElementById("days");
+  daysRoot.innerHTML = "";
+  const today = new Date().toISOString().slice(0,10);
+  for (const m of data.homeMeals.days) {
+    const card = document.createElement("article");
+    card.className = "day" + (m.date === today ? " today" : "");
+    const head = document.createElement("div");
+    head.className = "day-head";
+    head.innerHTML = `<strong>${m.weekday}</strong><span>${m.date.slice(8)}.${m.date.slice(5,7)}</span>`;
+    card.appendChild(head);
+
+    const meal = document.createElement("div");
+    meal.className = "meal";
+    meal.innerHTML = `<span class="label">Hemma</span>${m.meal}`;
+    card.appendChild(meal);
+
+    const school = document.createElement("div");
+    school.className = "school";
+    school.textContent = data.schoolMeals?.status === "pending"
+      ? "Skola: snart"
+      : (data.schoolMeals?.days?.find(x => x.date === m.date)?.meal || "—");
+    card.appendChild(school);
+
+    const evWrap = document.createElement("div");
+    evWrap.className = "events";
+    const list = eventsByDate[m.date] || [];
+    if (!list.length) {
+      const empty = document.createElement("div");
+      empty.className = "ev";
+      empty.innerHTML = `<div class="t">Inga aktiviteter i kalendern</div>`;
+      evWrap.appendChild(empty);
+    } else {
+      for (const e of list) {
+        const el = document.createElement("div");
+        el.className = "ev" + (e.flag ? " flag" : "");
+        el.innerHTML = `<div class="t">${e.time}–${e.end || ""}</div><div>${e.title}</div><span class="who">${e.who || ""}</span>`;
+        evWrap.appendChild(el);
+      }
+    }
+    card.appendChild(evWrap);
+    daysRoot.appendChild(card);
+  }
+
+  // Also show Sunday 20 if in events but not in meal week? skip — week starts Mon
+
+  const mealList = document.getElementById("mealList");
+  mealList.innerHTML = data.homeMeals.days.map(d => `<li><strong>${d.weekday}:</strong> ${d.meal}</li>`).join("");
+  document.getElementById("mealNote").textContent = data.homeMeals.notes || "";
+  document.getElementById("schoolNote").textContent = data.schoolMeals?.note || "";
+}
+load().catch(err => {
+  document.getElementById("weekLabel").textContent = "Kunde inte ladda data.json";
+  console.error(err);
+});
+</script>
+</body>
+</html>

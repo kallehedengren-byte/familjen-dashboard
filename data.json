@@ -1,0 +1,187 @@
+{
+  "updated": "2026-09-20T11:13:16+02:00",
+  "weekLabel": "v. 39 · 21–27 september 2026",
+  "family": [
+    "Kalle",
+    "Ebba",
+    "Nils",
+    "Edvin",
+    "Maj"
+  ],
+  "homeMeals": {
+    "source": "Veckans Matsedel",
+    "days": [
+      {
+        "date": "2026-09-21",
+        "weekday": "Mån",
+        "meal": "Korvstroganoff med ris"
+      },
+      {
+        "date": "2026-09-22",
+        "weekday": "Tis",
+        "meal": "Ugnskyckling med potatis och rotfrukter"
+      },
+      {
+        "date": "2026-09-23",
+        "weekday": "Ons",
+        "meal": "Spaghetti med köttfärssås"
+      },
+      {
+        "date": "2026-09-24",
+        "weekday": "Tor",
+        "meal": "Fiskgratäng med potatis och ärtor"
+      },
+      {
+        "date": "2026-09-25",
+        "weekday": "Fre",
+        "meal": "Tacos"
+      },
+      {
+        "date": "2026-09-26",
+        "weekday": "Lör",
+        "meal": "Egen pizza"
+      },
+      {
+        "date": "2026-09-27",
+        "weekday": "Sön",
+        "meal": "Köttbullar med potatis, brunsås och lingon"
+      }
+    ],
+    "notes": "Inköpslista i Google Keep: Inköpslista 21–27 sep"
+  },
+  "schoolMeals": {
+    "status": "ok",
+    "school": "Pershagens grundskola",
+    "source": "skolmaten.se",
+    "note": "Södertälje kommun · Pershagens grundskola (v.39). Tor=studiedag.",
+    "days": [
+      {
+        "date": "2026-09-21",
+        "weekday": "Mån",
+        "meal": "Beredskapsvecka: Biff stroganoff serveras med saltgurka och ris / Champinjonstroganoff serveras med ris"
+      },
+      {
+        "date": "2026-09-22",
+        "weekday": "Tis",
+        "meal": "Pasta alla Norma / Spansk bondomelett"
+      },
+      {
+        "date": "2026-09-23",
+        "weekday": "Ons",
+        "meal": "Pestobakad sejfilé serveras med rostad potatis / Pumpapaj serveras med rotfruktssallad"
+      },
+      {
+        "date": "2026-09-24",
+        "weekday": "Tor",
+        "meal": "Studiedag – endast fritids / Kökets val"
+      },
+      {
+        "date": "2026-09-25",
+        "weekday": "Fre",
+        "meal": "Pizzabuffé / Äpplets dag"
+      },
+      {
+        "date": "2026-09-26",
+        "weekday": "Lör",
+        "meal": "— (helg)"
+      },
+      {
+        "date": "2026-09-27",
+        "weekday": "Sön",
+        "meal": "— (helg)"
+      }
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-09-21",
+      "time": "16:45",
+      "end": "17:45",
+      "title": "Föräldramöte förskolan",
+      "who": "Ebba",
+      "cal": "Ebba",
+      "flag": "krock"
+    },
+    {
+      "date": "2026-09-21",
+      "time": "17:00",
+      "end": "18:30",
+      "title": "Nils innebandy – Pershagen",
+      "who": "Nils",
+      "cal": "Family",
+      "flag": "krock"
+    },
+    {
+      "date": "2026-09-22",
+      "time": "08:00",
+      "end": "09:00",
+      "title": "Edvin orientering Stockholm (matlåda)",
+      "who": "Edvin",
+      "cal": "Ebba"
+    },
+    {
+      "date": "2026-09-23",
+      "time": "14:00",
+      "end": "15:00",
+      "title": "Kyrkis",
+      "who": "Familj",
+      "cal": "Ebba"
+    },
+    {
+      "date": "2026-09-23",
+      "time": "17:00",
+      "end": "18:30",
+      "title": "Nils innebandy – Östertälje",
+      "who": "Nils",
+      "cal": "Family"
+    },
+    {
+      "date": "2026-09-24",
+      "time": "07:00",
+      "end": "08:00",
+      "title": "Studiedag – fritids öppet",
+      "who": "Skola",
+      "cal": "Ebba"
+    },
+    {
+      "date": "2026-09-24",
+      "time": "08:00",
+      "end": "11:30",
+      "title": "Hemstäd",
+      "who": "Hem",
+      "cal": "Ebba"
+    },
+    {
+      "date": "2026-09-24",
+      "time": "18:00",
+      "end": "19:30",
+      "title": "Nils fotboll",
+      "who": "Nils",
+      "cal": "Ebba"
+    },
+    {
+      "date": "2026-09-25",
+      "time": "16:30",
+      "end": "18:00",
+      "title": "Nils H – Kiosken Pershagen",
+      "who": "Nils",
+      "cal": "Family"
+    },
+    {
+      "date": "2026-09-26",
+      "time": "09:00",
+      "end": "10:30",
+      "title": "Nils fotbollsträning",
+      "who": "Nils",
+      "cal": "Family"
+    },
+    {
+      "date": "2026-09-26",
+      "time": "14:00",
+      "end": "15:00",
+      "title": "Kalas för Maj",
+      "who": "Maj",
+      "cal": "Ebba"
+    }
+  ]
+}
