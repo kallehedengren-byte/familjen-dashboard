@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="sv"><head><meta charset="utf-8"><title>Rensa cache · Hedengrens Vecka</title></head>
+<body style="font-family:system-ui;padding:2rem;background:#f4f0e8">
+<h1>Rensar cache…</h1>
+<p id="s">Vänta</p>
+<script>
+(async function () {
+  const s = document.getElementById("s");
+  try {
+    if (window.caches) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+      s.textContent = "Tog bort " + keys.length + " cache(r).";
+    }
+    if ("serviceWorker" in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+      s.textContent += " Avregistrerade " + regs.length + " service worker(s).";
+    }
+  } catch (e) {
+    s.textContent = "Fel: " + e;
+  }
+  setTimeout(function () {
+    location.replace("./?v=2");
+  }, 600);
+})();
+</script>
+</body></html>

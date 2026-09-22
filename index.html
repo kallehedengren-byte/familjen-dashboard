@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
+<script>
+(function () {
+  var KEY = "hv-nuked-v2";
+  var params = new URLSearchParams(location.search);
+  var force = params.has("reset") || params.has("nocache");
+  if (!force && sessionStorage.getItem(KEY)) return;
+  sessionStorage.setItem(KEY, "1");
+  var done = function () {
+    var u = new URL(location.href);
+    u.searchParams.delete("reset");
+    u.searchParams.set("v", "2");
+    location.replace(u.toString());
+  };
+  if (!("serviceWorker" in navigator)) { if (force) done(); return; }
+  Promise.resolve()
+    .then(function () { return caches.keys(); })
+    .then(function (keys) { return Promise.all(keys.map(function (k) { return caches.delete(k); })); })
+    .then(function () { return navigator.serviceWorker.getRegistrations(); })
+    .then(function (regs) { return Promise.all(regs.map(function (r) { return r.unregister(); })); })
+    .catch(function () {})
+    .then(done);
+})();
+</script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hedengrens Vecka</title>
