@@ -1,7 +1,7 @@
 {
-  "name": "Familjen",
-  "short_name": "Familjen",
-  "description": "Veckans kalender, hemmamat och skolmat",
+  "name": "Hedengrens Vecka",
+  "short_name": "Hedengren",
+  "description": "Veckans kalender, matsedel, skolmat, väder och elpris",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

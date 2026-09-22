@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Familjen</title>
+<title>Hedengrens Vecka</title>
 <meta name="theme-color" content="#0f766e" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-title" content="Familjen" />
+<meta name="apple-mobile-web-app-title" content="Hedengrens Vecka" />
 <link rel="manifest" href="./manifest.webmanifest" />
 <link rel="apple-touch-icon" href="./icon-192.png" />
 
@@ -446,7 +446,7 @@
 <body class="tv-mode">
   <header>
     <div>
-      <h1>Familjen · veckan</h1>
+      <h1>Hedengrens Vecka</h1>
       <div class="sub" id="weekLabel">Laddar…</div>
     </div>
     <div class="pill" id="updated">—</div>
@@ -741,7 +741,7 @@ async function maybeNotify() {
   if (Notification.permission !== "granted") return;
   for (const a of DATA.alerts || []) {
     try {
-      new Notification(a.type === "krock" ? "Familjen · krock" : "Familjen · info", {
+      new Notification(a.type === "krock" ? "Hedengrens Vecka · krock" : "Hedengrens Vecka · info", {
         body: a.text,
         tag: "familjen-" + (a.date || "") + "-" + a.type,
       });
@@ -866,7 +866,10 @@ function renderSpotPrice() {
 }
 
 async function load() {
-  const res = await fetch("./data.json?t=" + Date.now());
+  const url = new URL("./data.json", window.location.href);
+  url.searchParams.set("t", String(Date.now()));
+  const res = await fetch(url.toString(), { cache: "no-store" });
+  if (!res.ok) throw new Error("HTTP " + res.status + " för data.json");
   DATA = await res.json();
   if (!selectedDate) selectedDate = stockholmToday();
   document.getElementById("weekLabel").textContent = DATA.weekLabel;
@@ -885,14 +888,19 @@ document.getElementById("btnNotify").addEventListener("click", requestNotify);
 setupMealDialog();
 
 load().catch(err => {
-  document.getElementById("weekLabel").textContent = "Kunde inte ladda data.json";
+  const msg = (err && err.message) ? err.message : String(err);
+  document.getElementById("weekLabel").textContent = "Kunde inte ladda data.json (" + msg + ")";
   console.error(err);
 });
 </script>
 
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(console.error);
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    return Promise.all(regs.map(r => r.update()));
+  }).finally(() => {
+    navigator.serviceWorker.register('./sw.js').catch(console.error);
+  });
 }
 setInterval(() => { if (typeof load === 'function') load(); }, 30 * 60 * 1000);
 </script>
