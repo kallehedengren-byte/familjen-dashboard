@@ -3,7 +3,7 @@
 <head>
 <script>
 (function () {
-  var KEY = "hv-nuked-v2";
+  var KEY = "hv-nuked-v3";
   var params = new URLSearchParams(location.search);
   var force = params.has("reset") || params.has("nocache");
   if (!force && sessionStorage.getItem(KEY)) return;
@@ -11,7 +11,7 @@
   var done = function () {
     var u = new URL(location.href);
     u.searchParams.delete("reset");
-    u.searchParams.set("v", "2");
+    u.searchParams.set("v", "3");
     location.replace(u.toString());
   };
   if (!("serviceWorker" in navigator)) { if (force) done(); return; }
@@ -261,6 +261,47 @@
     font-size: 0.7rem;
     margin-top: 4px;
   }
+
+  .week-cal { padding: 18px; }
+  .week-cal h2 { margin: 0 0 4px; font-size: 1.15rem; }
+  .week-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
+  }
+  @media (max-width: 900px) {
+    .week-cal-grid { grid-template-columns: 1fr; }
+  }
+  .week-cal-day {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px;
+    min-height: 120px;
+  }
+  .week-cal-day.today {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-soft);
+  }
+  .week-cal-day .wd {
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .week-cal-day .wd span { color: var(--muted); font-weight: 500; font-size: 0.8rem; }
+  .week-cal-ev {
+    font-size: 0.82rem;
+    line-height: 1.3;
+    padding: 6px 0;
+    border-top: 1px solid var(--line);
+  }
+  .week-cal-ev:first-of-type { border-top: 0; }
+  .week-cal-ev .t { color: var(--muted); font-size: 0.72rem; }
+  .week-cal-ev.krock { color: #9f1239; font-weight: 600; }
+  .week-cal-empty { color: var(--muted); font-size: 0.8rem; }
   .alerts { display: grid; gap: 10px; }
   .banner {
     border-radius: var(--radius);
@@ -531,6 +572,11 @@
     </div>
 
     <div class="alerts" id="alerts"></div>
+    <section class="card week-cal" aria-label="Veckans kalender">
+      <h2>Veckans kalender</h2>
+      <p class="sub" id="weekCalSub" style="margin:0 0 12px">Översikt mån–sön</p>
+      <div class="week-cal-grid" id="weekCalendar"></div>
+    </section>
     <section class="grid-days" id="days"></section>
     <section class="panels">
       <div class="card">
@@ -593,6 +639,18 @@ function homeMealFor(date) {
 }
 function schoolMealFor(date) {
   return DATA.schoolMeals?.days?.find(d => d.date === date) || null;
+}
+
+function renderAlerts() {
+  const root = document.getElementById("alerts");
+  if (!root) return;
+  root.innerHTML = "";
+  for (const a of DATA.alerts || []) {
+    const el = document.createElement("div");
+    el.className = "banner " + (a.type === "krock" ? "krock" : "info");
+    el.textContent = (a.type === "krock" ? "⚠️ " : "ℹ️ ") + a.text;
+    root.appendChild(el);
+  }
 }
 
 function renderToday() {
@@ -682,6 +740,41 @@ function renderDays() {
     }
     card.appendChild(evWrap);
     daysRoot.appendChild(card);
+  }
+}
+
+
+function renderWeekCalendar() {
+  const root = document.getElementById("weekCalendar");
+  const sub = document.getElementById("weekCalSub");
+  if (!root) return;
+  root.innerHTML = "";
+  if (sub) sub.textContent = DATA.weekLabel || "Översikt mån–sön";
+  const today = stockholmToday();
+  const eventsByDate = {};
+  for (const e of DATA.events || []) (eventsByDate[e.date] ||= []).push(e);
+  for (const d of (DATA.homeMeals?.days || [])) {
+    const col = document.createElement("div");
+    col.className = "week-cal-day" + (d.date === today ? " today" : "");
+    const head = document.createElement("div");
+    head.className = "wd";
+    head.innerHTML = `<strong>${d.weekday}</strong><span>${d.date.slice(8)}.${d.date.slice(5,7)}</span>`;
+    col.appendChild(head);
+    const list = (eventsByDate[d.date] || []).slice().sort((a,b) => (a.time || "").localeCompare(b.time || ""));
+    if (!list.length) {
+      const empty = document.createElement("div");
+      empty.className = "week-cal-empty";
+      empty.textContent = "Inga aktiviteter";
+      col.appendChild(empty);
+    } else {
+      for (const e of list) {
+        const el = document.createElement("div");
+        el.className = "week-cal-ev" + (e.flag === "krock" ? " krock" : "");
+        el.innerHTML = `<div class="t">${e.time || ""}${e.end ? "–" + e.end : ""} · ${e.who || ""}</div><div>${e.title}</div>`;
+        col.appendChild(el);
+      }
+    }
+    root.appendChild(col);
   }
 }
 
@@ -900,6 +993,7 @@ async function load() {
   renderToday();
   renderSpotPrice();
   renderAlerts();
+  renderWeekCalendar();
   renderDays();
   renderLists();
   maybeNotify();
