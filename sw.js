@@ -1,4 +1,4 @@
-const CACHE = 'familjen-v5';
+const CACHE = 'familjen-v6';
 const ASSETS = ['./', './index.html', './data.json', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));

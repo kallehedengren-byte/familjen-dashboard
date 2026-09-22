@@ -572,7 +572,24 @@ function schoolMealFor(date) {
   return DATA.schoolMeals?.days?.find(d => d.date === date) || null;
 }
 
-function t.getElementById("todaySchool").textContent = sm?.meal || "—";
+function renderToday() {
+  const today = stockholmToday();
+  const dayMeta = DATA.homeMeals?.days?.find(d => d.date === today) || DATA.today || {};
+  const long = dayMeta.weekdayLong || dayMeta.weekday || "";
+  document.getElementById("todayTitle").textContent = "Idag · " + (long || today);
+  document.getElementById("todayDateSub").textContent = today;
+
+  const wx = (DATA.weather?.days || []).find(d => d.date === today) || DATA.weather?.days?.[0];
+  const wxEl = document.getElementById("todayWeather");
+  if (wx) {
+    wxEl.innerHTML = `<div class="icon">${wx.icon || "🌡️"}</div>
+      <div><div class="temps">${wx.tempMax}° / ${wx.tempMin}°</div>
+      <div style="opacity:0.85;font-size:0.85rem">${wx.summary} · ${DATA.weather?.location || ""}</div></div>`;
+  }
+
+  document.getElementById("todayHome").textContent = homeMealFor(today);
+  const sm = schoolMealFor(today);
+  document.getElementById("todaySchool").textContent = sm?.meal || "—";
 
   const evRoot = document.getElementById("todayEvents");
   evRoot.innerHTML = "";
