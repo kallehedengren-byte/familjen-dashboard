@@ -2,19 +2,45 @@
 <html lang="sv">
 <head>
 <script>
+/* Skyddsnät (ES5): låt aldrig sidan fastna tyst på "Laddar…". */
 (function () {
-  var KEY = "hv-nuked-v3";
+  window.__hvLoaded = false;
+  window.__hvFail = function (msg) {
+    var el = document.getElementById("weekLabel");
+    window.__hvFailed = true;
+    if (!el) return;
+    el.innerHTML = "";
+    el.appendChild(document.createTextNode("Kunde inte visa veckan (" + msg + ") · "));
+    var a = document.createElement("a");
+    a.href = "./reset.html";
+    a.textContent = "Tryck här för att rensa cache";
+    el.appendChild(a);
+  };
+  window.addEventListener("error", function (e) {
+    if (window.__hvLoaded) return;
+    window.__hvFail((e && e.message) || "okänt fel");
+  });
+  setTimeout(function () {
+    if (!window.__hvLoaded && !window.__hvFailed) window.__hvFail("tog för lång tid");
+  }, 20000);
+})();
+/* Engångsrensning av gamla service workers/cachar per enhet (inte varje session). */
+(function () {
+  var KEY = "hv-nuked-v4";
   var params = new URLSearchParams(location.search);
   var force = params.has("reset") || params.has("nocache");
-  if (!force && sessionStorage.getItem(KEY)) return;
-  sessionStorage.setItem(KEY, "1");
+  var store;
+  try { store = window.localStorage; store.getItem(KEY); } catch (e) { return; }
+  if (!force && store.getItem(KEY)) return;
+  try { store.setItem(KEY, "1"); } catch (e) { return; }
   var done = function () {
     var u = new URL(location.href);
     u.searchParams.delete("reset");
-    u.searchParams.set("v", "3");
+    u.searchParams.delete("nocache");
+    u.searchParams.set("v", String(Date.now()));
     location.replace(u.toString());
   };
-  if (!("serviceWorker" in navigator)) { if (force) done(); return; }
+  if (!("serviceWorker" in navigator) || !window.caches) { if (force) done(); return; }
   Promise.resolve()
     .then(function () { return caches.keys(); })
     .then(function (keys) { return Promise.all(keys.map(function (k) { return caches.delete(k); })); })
@@ -28,10 +54,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hedengrens Vecka</title>
 <meta name="theme-color" content="#0f766e" />
+<meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="Hedengrens Vecka" />
 <link rel="manifest" href="./manifest.webmanifest" />
+<link rel="icon" href="./icon-192.png" />
 <link rel="apple-touch-icon" href="./icon-192.png" />
 
 <style>
@@ -612,414 +640,567 @@
   </dialog>
 
 <script>
-const LS_MEALS = "familjen-meal-overrides-v1";
-const LS_NOTIFIED = "familjen-notified-v1";
+/* Obs: undvik ?. och ||= så att äldre Android-webbläsare/WebView kan köra sidan. */
+var LS_MEALS = "familjen-meal-overrides-v1";
+var LS_NOTIFIED = "familjen-notified-v1";
+var LS_LAST_DATA = "hv-last-data-v1";
+var FETCH_TIMEOUT_MS = 10000;
 
-let DATA = null;
-let selectedDate = null;
+var DATA = null;
+var selectedDate = null;
+var renderErrors = [];
 
+/* ---------- hjälpfunktioner ---------- */
+function $(id) { return document.getElementById(id); }
+function get(obj, path, dflt) {
+  var cur = obj;
+  var parts = path.split(".");
+  for (var i = 0; i < parts.length; i++) {
+    if (cur === null || cur === undefined || typeof cur !== "object") return dflt;
+    cur = cur[parts[i]];
+  }
+  return (cur === null || cur === undefined) ? dflt : cur;
+}
+function arr(v) { return Array.isArray(v) ? v.filter(function (x) { return x && typeof x === "object"; }) : []; }
+function str(v, dflt) {
+  if (v === null || v === undefined || v === "") return dflt === undefined ? "" : dflt;
+  return String(v);
+}
+function num(v) {
+  var n = typeof v === "number" ? v : parseFloat(v);
+  return (typeof n === "number" && isFinite(n)) ? n : null;
+}
+function esc(v) {
+  return str(v).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+function ddmm(date) {
+  var s = str(date);
+  return s.length >= 10 ? s.slice(8, 10) + "." + s.slice(5, 7) : s;
+}
+function timeRange(e) {
+  if (e.allDay) return "Heldag";
+  var t = str(e.time);
+  var end = str(e.end);
+  return end ? (t + "–" + end) : t;
+}
 function stockholmToday() {
-  return new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Stockholm" });
+  try {
+    return new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Stockholm" });
+  } catch (e) {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
 }
 function fmtUpdated(iso) {
+  if (!iso) return "—";
   try {
-    return "Uppdaterad " + new Date(iso).toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Stockholm" });
-  } catch { return iso; }
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return "Uppdaterad " + iso;
+    return "Uppdaterad " + d.toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Stockholm" });
+  } catch (e) { return "Uppdaterad " + iso; }
 }
 function loadMealOverrides() {
-  try { return JSON.parse(localStorage.getItem(LS_MEALS) || "{}"); } catch { return {}; }
+  try {
+    var o = JSON.parse(localStorage.getItem(LS_MEALS) || "{}");
+    return (o && typeof o === "object") ? o : {};
+  } catch (e) { return {}; }
 }
 function saveMealOverrides(o) {
-  localStorage.setItem(LS_MEALS, JSON.stringify(o));
+  try { localStorage.setItem(LS_MEALS, JSON.stringify(o)); } catch (e) {}
+}
+function events() { return arr(DATA && DATA.events); }
+function eventsByDate() {
+  var map = {};
+  events().forEach(function (e) {
+    var k = str(e.date);
+    if (!map[k]) map[k] = [];
+    map[k].push(e);
+  });
+  return map;
+}
+/* Veckans dagar: från hemmamatsedeln, annars skolmaten/vädret, annars genererat från weekStart. */
+function weekDays() {
+  var src = arr(get(DATA, "homeMeals.days", []));
+  if (!src.length) src = arr(get(DATA, "schoolMeals.days", []));
+  if (!src.length) src = arr(get(DATA, "weather.days", []));
+  var days = src.filter(function (d) { return typeof d.date === "string" && d.date.length >= 10; })
+    .map(function (d) { return { date: d.date, weekday: str(d.weekday, d.date) }; });
+  if (days.length) return days;
+  var start = str(get(DATA, "weekStart", ""));
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(start)) return [];
+  var names = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
+  var out = [];
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(start + "T12:00:00Z");
+    d.setUTCDate(d.getUTCDate() + i);
+    out.push({ date: d.toISOString().slice(0, 10), weekday: names[d.getUTCDay()] });
+  }
+  return out;
 }
 function homeMealFor(date) {
-  const ov = loadMealOverrides();
+  var ov = loadMealOverrides();
   if (ov[date]) return ov[date];
-  return DATA.homeMeals?.days?.find(d => d.date === date)?.meal || "—";
+  var hit = arr(get(DATA, "homeMeals.days", [])).filter(function (d) { return d.date === date; })[0];
+  return str(hit && hit.meal, "—");
 }
 function schoolMealFor(date) {
-  return DATA.schoolMeals?.days?.find(d => d.date === date) || null;
+  return arr(get(DATA, "schoolMeals.days", [])).filter(function (d) { return d.date === date; })[0] || null;
+}
+
+/* Kör en sektion isolerat så att ett fel inte stoppar resten av sidan. */
+function safeRender(name, fn) {
+  try { fn(); }
+  catch (e) {
+    renderErrors.push(name);
+    if (window.console) console.warn("[Hedengrens Vecka] sektionen '" + name + "' kunde inte visas:", e);
+  }
+}
+
+/* ---------- sektioner ---------- */
+function renderHeader(fromCache) {
+  $("weekLabel").textContent = str(get(DATA, "weekLabel", ""), "Hedengrens Vecka");
+  $("updated").textContent = fmtUpdated(get(DATA, "updated", "")) + (fromCache ? " · sparad kopia" : "");
 }
 
 function renderAlerts() {
-  const root = document.getElementById("alerts");
+  var root = $("alerts");
   if (!root) return;
   root.innerHTML = "";
-  for (const a of DATA.alerts || []) {
-    const el = document.createElement("div");
+  arr(get(DATA, "alerts", [])).forEach(function (a) {
+    if (!a.text) return;
+    var el = document.createElement("div");
     el.className = "banner " + (a.type === "krock" ? "krock" : "info");
-    el.textContent = (a.type === "krock" ? "⚠️ " : "ℹ️ ") + a.text;
+    el.textContent = (a.type === "krock" ? "⚠️ " : "ℹ️ ") + str(a.text);
     root.appendChild(el);
+  });
+  if (renderErrors.length) {
+    var warn = document.createElement("div");
+    warn.className = "banner info";
+    warn.textContent = "ℹ️ Vissa delar kunde inte visas (" + renderErrors.join(", ") + "). Resten av veckan visas som vanligt.";
+    root.appendChild(warn);
   }
 }
 
 function renderToday() {
-  const today = stockholmToday();
-  const dayMeta = DATA.homeMeals?.days?.find(d => d.date === today) || DATA.today || {};
-  const long = dayMeta.weekdayLong || dayMeta.weekday || "";
-  document.getElementById("todayTitle").textContent = "Idag · " + (long || today);
-  document.getElementById("todayDateSub").textContent = today;
+  var today = stockholmToday();
+  var dayMeta = arr(get(DATA, "homeMeals.days", [])).filter(function (d) { return d.date === today; })[0]
+    || get(DATA, "today", {}) || {};
+  var long = str(dayMeta.weekdayLong || dayMeta.weekday);
+  $("todayTitle").textContent = "Idag · " + (long || today);
+  $("todayDateSub").textContent = today;
 
-  const wx = (DATA.weather?.days || []).find(d => d.date === today) || DATA.weather?.days?.[0];
-  const wxEl = document.getElementById("todayWeather");
+  var wxDays = arr(get(DATA, "weather.days", []));
+  var wx = wxDays.filter(function (d) { return d.date === today; })[0] || wxDays[0];
+  var wxEl = $("todayWeather");
   if (wx) {
-    wxEl.innerHTML = `<div class="icon">${wx.icon || "🌡️"}</div>
-      <div><div class="temps">${wx.tempMax}° / ${wx.tempMin}°</div>
-      <div style="opacity:0.85;font-size:0.85rem">${wx.summary} · ${DATA.weather?.location || ""}</div></div>`;
+    wxEl.innerHTML = '<div class="icon">' + esc(wx.icon || "🌡️") + '</div>'
+      + '<div><div class="temps">' + esc(str(wx.tempMax, "–")) + '° / ' + esc(str(wx.tempMin, "–")) + '°</div>'
+      + '<div style="opacity:0.85;font-size:0.85rem">' + esc(str(wx.summary)) + ' · ' + esc(str(get(DATA, "weather.location", ""))) + '</div></div>';
   }
 
-  document.getElementById("todayHome").textContent = homeMealFor(today);
-  const sm = schoolMealFor(today);
-  document.getElementById("todaySchool").textContent = sm?.meal || "—";
+  $("todayHome").textContent = homeMealFor(today);
+  var sm = schoolMealFor(today);
+  $("todaySchool").textContent = str(sm && sm.meal, "—");
 
-  const evRoot = document.getElementById("todayEvents");
+  var evRoot = $("todayEvents");
   evRoot.innerHTML = "";
-  const todays = (DATA.events || []).filter(e => e.date === today);
+  var todays = events().filter(function (e) { return e.date === today; });
   if (!todays.length) {
-    evRoot.innerHTML = `<div class="today-ev">Inga aktiviteter</div>`;
+    evRoot.innerHTML = '<div class="today-ev">Inga aktiviteter</div>';
   } else {
-    for (const e of todays) {
-      const div = document.createElement("div");
+    todays.forEach(function (e) {
+      var div = document.createElement("div");
       div.className = "today-ev" + (e.flag === "krock" ? " krock" : "");
-      div.textContent = `${e.time}–${e.end || ""} · ${e.title} (${e.who || ""})`;
+      div.textContent = timeRange(e) + " · " + str(e.title, "Aktivitet") + (e.who ? " (" + e.who + ")" : "");
       evRoot.appendChild(div);
-    }
+    });
   }
 }
 
 function renderDays() {
-  const daysRoot = document.getElementById("days");
+  var daysRoot = $("days");
   daysRoot.innerHTML = "";
-  const today = stockholmToday();
-  const eventsByDate = {};
-  for (const e of DATA.events || []) (eventsByDate[e.date] ||= []).push(e);
+  var today = stockholmToday();
+  var byDate = eventsByDate();
+  var overrides = loadMealOverrides();
 
-  for (const m of DATA.homeMeals.days) {
-    const card = document.createElement("article");
-    card.className = "day"
-      + (m.date === today ? " today" : "")
-      + (m.date === selectedDate ? " selected" : "");
-    const head = document.createElement("div");
+  weekDays().forEach(function (m) {
+    var card = document.createElement("article");
+    card.className = "day" + (m.date === today ? " today" : "") + (m.date === selectedDate ? " selected" : "");
+    var head = document.createElement("div");
     head.className = "day-head";
-    head.innerHTML = `<strong>${m.weekday}</strong><span>${m.date.slice(8)}.${m.date.slice(5,7)}</span>`;
+    head.innerHTML = "<strong>" + esc(m.weekday) + "</strong><span>" + esc(ddmm(m.date)) + "</span>";
     head.title = "Välj dag för Byt middagsrätt";
-    head.addEventListener("click", () => {
+    head.addEventListener("click", function () {
       selectedDate = m.date;
-      renderDays();
+      safeRender("dagar", renderDays);
     });
     card.appendChild(head);
 
-    const meal = document.createElement("div");
+    var meal = document.createElement("div");
     meal.className = "meal";
-    const mealText = homeMealFor(m.date);
-    const overridden = !!loadMealOverrides()[m.date];
-    meal.innerHTML = `<span class="label">Hemma${overridden ? " · ändrad" : ""}</span>${mealText}`;
+    meal.innerHTML = '<span class="label">Hemma' + (overrides[m.date] ? " · ändrad" : "") + "</span>" + esc(homeMealFor(m.date));
     card.appendChild(meal);
 
-    const school = document.createElement("div");
-    const sm = schoolMealFor(m.date);
-    school.className = "school" + (sm?.studiedag ? " studiedag" : "");
-    school.innerHTML = `<span class="label">Skola</span>${sm?.meal || "—"}`;
+    var school = document.createElement("div");
+    var sm = schoolMealFor(m.date);
+    school.className = "school" + (sm && sm.studiedag ? " studiedag" : "");
+    school.innerHTML = '<span class="label">Skola</span>' + esc(str(sm && sm.meal, "—"));
     card.appendChild(school);
 
-    const evWrap = document.createElement("div");
+    var evWrap = document.createElement("div");
     evWrap.className = "events";
-    const list = eventsByDate[m.date] || [];
+    var list = byDate[m.date] || [];
     if (!list.length) {
-      const empty = document.createElement("div");
-      empty.className = "ev";
-      empty.innerHTML = `<div class="t">Inga aktiviteter</div>`;
-      evWrap.appendChild(empty);
+      evWrap.innerHTML = '<div class="ev"><div class="t">Inga aktiviteter</div></div>';
     } else {
-      for (const e of list) {
-        const el = document.createElement("div");
+      list.forEach(function (e) {
+        var el = document.createElement("div");
         el.className = "ev" + (e.flag ? " flag" : "");
-        el.innerHTML = `<div class="t">${e.time}–${e.end || ""}</div><div>${e.title}</div><span class="who">${e.who || ""}</span>`;
+        el.innerHTML = '<div class="t">' + esc(timeRange(e)) + "</div><div>" + esc(str(e.title, "Aktivitet")) + "</div>"
+          + (e.who ? '<span class="who">' + esc(e.who) + "</span>" : "");
         evWrap.appendChild(el);
-      }
+      });
     }
     card.appendChild(evWrap);
     daysRoot.appendChild(card);
-  }
+  });
 }
 
-
 function renderWeekCalendar() {
-  const root = document.getElementById("weekCalendar");
-  const sub = document.getElementById("weekCalSub");
+  var root = $("weekCalendar");
+  var sub = $("weekCalSub");
   if (!root) return;
   root.innerHTML = "";
-  if (sub) sub.textContent = DATA.weekLabel || "Översikt mån–sön";
-  const today = stockholmToday();
-  const eventsByDate = {};
-  for (const e of DATA.events || []) (eventsByDate[e.date] ||= []).push(e);
-  for (const d of (DATA.homeMeals?.days || [])) {
-    const col = document.createElement("div");
+  if (sub) sub.textContent = str(get(DATA, "weekLabel", ""), "Översikt mån–sön");
+  var today = stockholmToday();
+  var byDate = eventsByDate();
+  weekDays().forEach(function (d) {
+    var col = document.createElement("div");
     col.className = "week-cal-day" + (d.date === today ? " today" : "");
-    const head = document.createElement("div");
+    var head = document.createElement("div");
     head.className = "wd";
-    head.innerHTML = `<strong>${d.weekday}</strong><span>${d.date.slice(8)}.${d.date.slice(5,7)}</span>`;
+    head.innerHTML = "<strong>" + esc(d.weekday) + "</strong><span>" + esc(ddmm(d.date)) + "</span>";
     col.appendChild(head);
-    const list = (eventsByDate[d.date] || []).slice().sort((a,b) => (a.time || "").localeCompare(b.time || ""));
+    var list = (byDate[d.date] || []).slice().sort(function (a, b) {
+      if (a.allDay && !b.allDay) return -1;
+      if (b.allDay && !a.allDay) return 1;
+      return str(a.time).localeCompare(str(b.time));
+    });
     if (!list.length) {
-      const empty = document.createElement("div");
+      var empty = document.createElement("div");
       empty.className = "week-cal-empty";
       empty.textContent = "Inga aktiviteter";
       col.appendChild(empty);
     } else {
-      for (const e of list) {
-        const el = document.createElement("div");
+      list.forEach(function (e) {
+        var el = document.createElement("div");
         el.className = "week-cal-ev" + (e.flag === "krock" ? " krock" : "");
-        el.innerHTML = `<div class="t">${e.time || ""}${e.end ? "–" + e.end : ""} · ${e.who || ""}</div><div>${e.title}</div>`;
+        el.innerHTML = '<div class="t">' + esc(timeRange(e)) + (e.who ? " · " + esc(e.who) : "") + "</div><div>" + esc(str(e.title, "Aktivitet")) + "</div>";
         col.appendChild(el);
-      }
+      });
     }
     root.appendChild(col);
+  });
+}
+
+function renderMealList() {
+  $("mealList").innerHTML = weekDays().map(function (d) {
+    return "<li><strong>" + esc(d.weekday) + ":</strong> " + esc(homeMealFor(d.date)) + "</li>";
+  }).join("");
+  $("mealNote").textContent = str(get(DATA, "homeMeals.note", "") || get(DATA, "homeMeals.notes", ""));
+}
+
+function renderSchoolList() {
+  var schoolList = $("schoolList");
+  var schoolDays = arr(get(DATA, "schoolMeals.days", []));
+  if (get(DATA, "schoolMeals.status", "") === "pending" || !schoolDays.length) {
+    schoolList.innerHTML = "<li>Ingen skolmatsedel ännu</li>";
+  } else {
+    schoolList.innerHTML = schoolDays.map(function (d) {
+      return "<li><strong>" + esc(str(d.weekday, ddmm(d.date))) + ":</strong> " + esc(str(d.meal, "—")) + (d.studiedag ? " 📌" : "") + "</li>";
+    }).join("");
   }
+  $("schoolNote").textContent = str(get(DATA, "schoolMeals.note", ""));
+}
+
+function renderWeather() {
+  $("weatherWeek").innerHTML = arr(get(DATA, "weather.days", [])).map(function (d) {
+    return '<div class="wx-day"><div>' + esc(str(d.weekday, ddmm(d.date))) + '</div><div class="ic">' + esc(str(d.icon, "🌡️"))
+      + "</div><div>" + esc(str(d.tempMax, "–")) + "°/" + esc(str(d.tempMin, "–")) + "°</div></div>";
+  }).join("");
 }
 
 function renderLists() {
-  const mealList = document.getElementById("mealList");
-  mealList.innerHTML = DATA.homeMeals.days.map(d => {
-    const text = homeMealFor(d.date);
-    return `<li><strong>${d.weekday}:</strong> ${text}</li>`;
-  }).join("");
-  document.getElementById("mealNote").textContent = DATA.homeMeals.notes || "";
-
-  const schoolList = document.getElementById("schoolList");
-  const schoolDays = DATA.schoolMeals?.days || [];
-  if (DATA.schoolMeals?.status === "pending" || !schoolDays.length) {
-    schoolList.innerHTML = "<li>Ingen skolmatsedel ännu</li>";
-  } else {
-    schoolList.innerHTML = schoolDays.map(d =>
-      `<li><strong>${d.weekday}:</strong> ${d.meal}${d.studiedag ? " 📌" : ""}</li>`
-    ).join("");
-  }
-  document.getElementById("schoolNote").textContent = DATA.schoolMeals?.note || "";
-
-  const wxRoot = document.getElementById("weatherWeek");
-  wxRoot.innerHTML = (DATA.weather?.days || []).map(d =>
-    `<div class="wx-day"><div>${d.weekday}</div><div class="ic">${d.icon}</div><div>${d.tempMax}°/${d.tempMin}°</div></div>`
-  ).join("");
+  safeRender("hemmamatsedel", renderMealList);
+  safeRender("skolmat", renderSchoolList);
+  safeRender("väder", renderWeather);
 }
 
+function formatKr(sek) {
+  var n = num(sek);
+  if (n === null) return "—";
+  return n.toFixed(2).replace(".", ",") + " kr";
+}
+function formatOre(sek) {
+  var n = num(sek);
+  if (n === null) return "—";
+  return Math.round(n * 100) + " öre";
+}
+function formatPricePair(sek) { return formatOre(sek) + " · " + formatKr(sek); }
+
+function renderSpotPrice() {
+  var sp = get(DATA, "spotPrice", null);
+  var panel = $("spotPanel");
+  if (!sp || typeof sp !== "object" || !sp.today || typeof sp.today !== "object") {
+    if (panel) panel.style.display = "none";
+    return;
+  }
+  panel.style.display = "";
+  var t = sp.today;
+  var current = num(t.current);
+  var mean = num(t.mean);
+  var hours = arr(t.hours).filter(function (h) { return num(h.mean) !== null; });
+  var big = $("spotCurrent");
+  big.textContent = formatKr(current);
+  big.classList.remove("low", "mid", "high");
+  var level = "mid";
+  if (current !== null && mean !== null) {
+    if (current < mean) level = "low";
+    else if (current > mean * 1.3) level = "high";
+    if (hours.length) {
+      var sorted = hours.map(function (h) { return num(h.mean); }).sort(function (a, b) { return a - b; });
+      var q3 = sorted[Math.floor(sorted.length * 0.75)];
+      if (current >= q3) level = "high";
+      if (current < mean) level = "low";
+    }
+  }
+  big.classList.add(level);
+  $("spotOre").textContent = formatOre(current) + "/kWh · nu";
+  $("spotMin").textContent = formatPricePair(t.min);
+  $("spotMax").textContent = formatPricePair(t.max);
+  $("spotMean").textContent = formatPricePair(t.mean);
+
+  var tmStat = $("spotTomorrowStat");
+  var tmMean = num(get(sp, "tomorrow.mean", null));
+  if (tmMean !== null) {
+    tmStat.style.display = "";
+    $("spotTomorrow").textContent = formatPricePair(tmMean);
+  } else {
+    tmStat.style.display = "none";
+  }
+
+  var cheap = arr(t.cheapest).filter(function (c) { return c.start && c.end; });
+  $("spotCheap").textContent = cheap.length
+    ? "Billigast: " + cheap.map(function (c) { return str(c.start) + "–" + str(c.end) + " (" + formatOre(c.price) + ")"; }).join(" · ")
+    : "Billigast: —";
+
+  var bars = $("spotBars");
+  bars.innerHTML = "";
+  if (hours.length) {
+    var maxP = Math.max.apply(null, hours.map(function (h) { return num(h.mean); }).concat([0.01]));
+    var nowHour = parseInt(new Date().toLocaleString("sv-SE", { timeZone: "Europe/Stockholm", hour: "numeric", hour12: false }), 10);
+    var cheapHours = {};
+    cheap.forEach(function (c) {
+      var sh = parseInt(str(c.start).slice(0, 2), 10);
+      var eh = parseInt(str(c.end).slice(0, 2), 10);
+      if (isNaN(sh) || isNaN(eh)) return;
+      for (var h = sh; h < eh; h++) cheapHours[h] = true;
+    });
+    hours.forEach(function (h) {
+      var hMean = num(h.mean);
+      var hour = parseInt(h.hour, 10);
+      var wrap = document.createElement("div");
+      wrap.className = "spot-bar-wrap";
+      wrap.title = str(h.label, String(hour)) + ": " + formatPricePair(hMean);
+      var bar = document.createElement("div");
+      bar.className = "spot-bar";
+      bar.style.height = Math.max(4, Math.round((Math.max(hMean, 0) / maxP) * 100)) + "%";
+      if (cheapHours[hour]) bar.classList.add("cheap");
+      else if (mean !== null && hMean > mean * 1.3) bar.classList.add("high");
+      if (hour === nowHour) bar.classList.add("now");
+      var lbl = document.createElement("div");
+      lbl.className = "hlbl";
+      lbl.textContent = (!isNaN(hour) && hour % 3 === 0) ? String(hour) : "";
+      wrap.appendChild(bar);
+      wrap.appendChild(lbl);
+      bars.appendChild(wrap);
+    });
+  }
+
+  var upd = sp.updated ? fmtUpdated(sp.updated).replace("Uppdaterad ", "") : "";
+  $("spotFoot").textContent = "Källa: " + str(sp.source, "elprisetjustnu.se") + " · " + str(sp.unit, "SEK/kWh") + (upd ? " · " + upd : "");
+}
+
+/* ---------- interaktivitet ---------- */
 function openMealDialog() {
-  const sel = document.getElementById("mealDaySelect");
-  sel.innerHTML = DATA.homeMeals.days.map(d =>
-    `<option value="${d.date}" ${(selectedDate || stockholmToday()) === d.date ? "selected" : ""}>${d.weekday} ${d.date.slice(8)}.${d.date.slice(5,7)}</option>`
-  ).join("");
-  const date = sel.value;
-  document.getElementById("mealText").value = homeMealFor(date);
-  document.getElementById("mealDialog").showModal();
+  if (!DATA) return;
+  var sel = $("mealDaySelect");
+  var cur = selectedDate || stockholmToday();
+  sel.innerHTML = weekDays().map(function (d) {
+    return '<option value="' + esc(d.date) + '"' + (cur === d.date ? " selected" : "") + ">" + esc(d.weekday) + " " + esc(ddmm(d.date)) + "</option>";
+  }).join("");
+  $("mealText").value = homeMealFor(sel.value);
+  $("mealDialog").showModal();
 }
 
 function setupMealDialog() {
-  document.getElementById("mealDaySelect").addEventListener("change", (e) => {
-    document.getElementById("mealText").value = homeMealFor(e.target.value);
+  $("mealDaySelect").addEventListener("change", function (e) {
+    $("mealText").value = homeMealFor(e.target.value);
   });
-  document.getElementById("mealForm").addEventListener("submit", (e) => {
-    const submitter = e.submitter;
+  $("mealForm").addEventListener("submit", function (e) {
+    var submitter = e.submitter;
     if (submitter && submitter.id === "mealSave") {
       e.preventDefault();
-      const date = document.getElementById("mealDaySelect").value;
-      const text = document.getElementById("mealText").value.trim();
+      var date = $("mealDaySelect").value;
+      var text = $("mealText").value.trim();
       if (!text) return;
-      const ov = loadMealOverrides();
+      var ov = loadMealOverrides();
       ov[date] = text;
       saveMealOverrides(ov);
       selectedDate = date;
-      document.getElementById("mealDialog").close();
-      renderToday();
-      renderDays();
+      $("mealDialog").close();
+      safeRender("idag", renderToday);
+      safeRender("dagar", renderDays);
       renderLists();
     }
   });
 }
 
 function addCalendarEvent() {
-  const date = selectedDate || stockholmToday();
-  const title = prompt("Titel på aktiviteten?", "");
+  var date = selectedDate || stockholmToday();
+  var title = prompt("Titel på aktiviteten?", "");
   if (title === null) return;
-  const start = `${date}T17:00:00`;
-  const end = `${date}T18:00:00`;
-  const url = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+  var start = date + "T17:00:00";
+  var end = date + "T18:00:00";
+  var url = "https://calendar.google.com/calendar/render?action=TEMPLATE"
     + "&text=" + encodeURIComponent(title || "Ny aktivitet")
     + "&dates=" + start.replace(/[-:]/g, "") + "/" + end.replace(/[-:]/g, "")
     + "&ctz=Europe/Stockholm";
   window.open(url, "_blank", "noopener");
 }
 
-async function maybeNotify() {
-  if (!("Notification" in window)) return;
-  const key = (DATA.updated || "") + "|" + (DATA.alerts || []).map(a => a.text).join("|");
-  const seen = localStorage.getItem(LS_NOTIFIED);
+function maybeNotify() {
+  if (!("Notification" in window) || !DATA) return;
+  var alerts = arr(get(DATA, "alerts", []));
+  var key = str(DATA.updated) + "|" + alerts.map(function (a) { return str(a.text); }).join("|");
+  var seen = null;
+  try { seen = localStorage.getItem(LS_NOTIFIED); } catch (e) {}
   if (seen === key) return;
   if (Notification.permission !== "granted") return;
-  for (const a of DATA.alerts || []) {
+  alerts.forEach(function (a) {
     try {
       new Notification(a.type === "krock" ? "Hedengrens Vecka · krock" : "Hedengrens Vecka · info", {
-        body: a.text,
-        tag: "familjen-" + (a.date || "") + "-" + a.type,
+        body: str(a.text),
+        tag: "familjen-" + str(a.date) + "-" + str(a.type)
       });
-    } catch {}
-  }
-  localStorage.setItem(LS_NOTIFIED, key);
+    } catch (e) {}
+  });
+  try { localStorage.setItem(LS_NOTIFIED, key); } catch (e) {}
 }
 
-async function requestNotify() {
+function requestNotify() {
   if (!("Notification" in window)) {
     alert("Notiser stöds inte i den här webbläsaren.");
     return;
   }
-  const perm = await Notification.requestPermission();
-  if (perm === "granted") {
-    localStorage.removeItem(LS_NOTIFIED);
-    await maybeNotify();
-    alert("Notiser aktiverade.");
-  } else {
-    alert("Notiser nekades.");
-  }
-}
-
-
-function formatKr(sek) {
-  if (sek == null || Number.isNaN(sek)) return "—";
-  return sek.toFixed(2).replace(".", ",") + " kr";
-}
-function formatOre(sek) {
-  if (sek == null || Number.isNaN(sek)) return "—";
-  const ore = Math.round(sek * 100);
-  return ore + " öre";
-}
-function formatPricePair(sek) {
-  return formatOre(sek) + " · " + formatKr(sek);
-}
-
-function renderSpotPrice() {
-  const sp = DATA.spotPrice;
-  const panel = document.getElementById("spotPanel");
-  if (!sp || !sp.today) {
-    if (panel) panel.style.display = "none";
-    return;
-  }
-  panel.style.display = "";
-  const t = sp.today;
-  const current = t.current;
-  const mean = t.mean;
-  const big = document.getElementById("spotCurrent");
-  big.textContent = formatKr(current);
-  big.classList.remove("low", "mid", "high");
-  let level = "mid";
-  if (current != null && mean != null) {
-    if (current < mean) level = "low";
-    else if (current > mean * 1.3) level = "high";
-    // top quartile of hour means
-    const hours = t.hours || [];
-    if (hours.length) {
-      const sorted = [...hours].map(h => h.mean).sort((a,b) => a-b);
-      const q3 = sorted[Math.floor(sorted.length * 0.75)];
-      if (current >= q3) level = "high";
-      if (current < mean) level = "low";
+  Promise.resolve(Notification.requestPermission()).then(function (perm) {
+    if (perm === "granted") {
+      try { localStorage.removeItem(LS_NOTIFIED); } catch (e) {}
+      maybeNotify();
+      alert("Notiser aktiverade.");
+    } else {
+      alert("Notiser nekades.");
     }
-  }
-  big.classList.add(level);
-  document.getElementById("spotOre").textContent = formatOre(current) + "/kWh · nu";
-  document.getElementById("spotMin").textContent = formatPricePair(t.min);
-  document.getElementById("spotMax").textContent = formatPricePair(t.max);
-  document.getElementById("spotMean").textContent = formatPricePair(t.mean);
-
-  const tmStat = document.getElementById("spotTomorrowStat");
-  if (sp.tomorrow && sp.tomorrow.mean != null) {
-    tmStat.style.display = "";
-    document.getElementById("spotTomorrow").textContent = formatPricePair(sp.tomorrow.mean);
-  } else {
-    tmStat.style.display = "none";
-  }
-
-  const cheap = t.cheapest || [];
-  if (cheap.length) {
-    document.getElementById("spotCheap").textContent =
-      "Billigast: " + cheap.map(c => `${c.start}–${c.end} (${formatOre(c.price)})`).join(" · ");
-  } else {
-    document.getElementById("spotCheap").textContent = "Billigast: —";
-  }
-
-  const bars = document.getElementById("spotBars");
-  bars.innerHTML = "";
-  const hours = t.hours || [];
-  if (hours.length) {
-    const maxP = Math.max(...hours.map(h => h.mean), 0.01);
-    const nowH = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Stockholm", hour: "numeric", hour12: false });
-    const nowHour = parseInt(nowH, 10);
-    const cheapHours = new Set();
-    for (const c of cheap) {
-      const sh = parseInt(c.start.slice(0,2), 10);
-      const eh = parseInt(c.end.slice(0,2), 10);
-      for (let h = sh; h < eh; h++) cheapHours.add(h);
-    }
-    for (const h of hours) {
-      const wrap = document.createElement("div");
-      wrap.className = "spot-bar-wrap";
-      wrap.title = `${h.label}: ${formatPricePair(h.mean)}`;
-      const bar = document.createElement("div");
-      bar.className = "spot-bar";
-      const pct = Math.max(4, Math.round((h.mean / maxP) * 100));
-      bar.style.height = pct + "%";
-      if (cheapHours.has(h.hour)) bar.classList.add("cheap");
-      else if (h.mean > mean * 1.3) bar.classList.add("high");
-      if (h.hour === nowHour) bar.classList.add("now");
-      const lbl = document.createElement("div");
-      lbl.className = "hlbl";
-      lbl.textContent = (h.hour % 3 === 0) ? String(h.hour) : "";
-      wrap.append(bar, lbl);
-      bars.appendChild(wrap);
-    }
-  }
-
-  const upd = sp.updated ? fmtUpdated(sp.updated).replace("Uppdaterad ", "") : "";
-  document.getElementById("spotFoot").textContent =
-    `Källa: ${sp.source || "elprisetjustnu.se"} · ${sp.unit || "SEK/kWh"}` + (upd ? ` · ${upd}` : "");
+  });
 }
 
-async function load() {
-  const url = new URL("./data.json", window.location.href);
-  url.searchParams.set("t", String(Date.now()));
-  const res = await fetch(url.toString(), { cache: "no-store" });
-  if (!res.ok) throw new Error("HTTP " + res.status + " för data.json");
-  DATA = await res.json();
+/* ---------- laddning ---------- */
+function renderAll(data, fromCache) {
+  DATA = data;
+  renderErrors = [];
   if (!selectedDate) selectedDate = stockholmToday();
-  document.getElementById("weekLabel").textContent = DATA.weekLabel;
-  document.getElementById("updated").textContent = fmtUpdated(DATA.updated);
-  renderToday();
-  renderSpotPrice();
-  renderAlerts();
-  renderWeekCalendar();
-  renderDays();
+  safeRender("rubrik", function () { renderHeader(fromCache); });
+  safeRender("idag", renderToday);
+  safeRender("spotpris", renderSpotPrice);
+  safeRender("kalender", renderWeekCalendar);
+  safeRender("dagar", renderDays);
   renderLists();
-  maybeNotify();
+  safeRender("notiser", renderAlerts);
+  window.__hvLoaded = true;
+  if (!fromCache) safeRender("notiser", maybeNotify);
 }
 
-document.getElementById("btnMeal").addEventListener("click", openMealDialog);
-document.getElementById("btnEvent").addEventListener("click", addCalendarEvent);
-document.getElementById("btnNotify").addEventListener("click", requestNotify);
-setupMealDialog();
+function fetchData() {
+  var url = new URL("./data.json", window.location.href);
+  url.searchParams.set("t", String(Date.now()));
+  var ctrl = (typeof AbortController === "function") ? new AbortController() : null;
+  var req = fetch(url.toString(), { cache: "no-store", signal: ctrl ? ctrl.signal : undefined })
+    .then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status + " för data.json");
+      return res.text();
+    })
+    .then(function (text) {
+      var d;
+      try { d = JSON.parse(text); } catch (e) { throw new Error("ogiltig JSON i data.json"); }
+      if (!d || typeof d !== "object" || Array.isArray(d)) throw new Error("oväntat format i data.json");
+      return d;
+    });
+  var timeout = new Promise(function (_, reject) {
+    setTimeout(function () {
+      if (ctrl) ctrl.abort();
+      reject(new Error("timeout"));
+    }, FETCH_TIMEOUT_MS);
+  });
+  return Promise.race([req, timeout]);
+}
 
-load().catch(err => {
-  const msg = (err && err.message) ? err.message : String(err);
-  document.getElementById("weekLabel").textContent = "Kunde inte ladda data.json (" + msg + ")";
-  console.error(err);
+function readLastData() {
+  try {
+    var d = JSON.parse(localStorage.getItem(LS_LAST_DATA) || "null");
+    return (d && typeof d === "object" && !Array.isArray(d)) ? d : null;
+  } catch (e) { return null; }
+}
+
+var loading = false;
+function load() {
+  if (loading) return Promise.resolve();
+  loading = true;
+  var cached = DATA ? null : readLastData();
+  if (cached) renderAll(cached, true); // visa senast sparade direkt, uppdatera när nätet svarar
+  return fetchData().then(function (d) {
+    try { localStorage.setItem(LS_LAST_DATA, JSON.stringify(d)); } catch (e) {}
+    renderAll(d, false);
+  }).catch(function (err) {
+    var msg = (err && err.message) ? err.message : String(err);
+    if (window.console) console.warn("[Hedengrens Vecka] kunde inte hämta data.json:", msg);
+    if (DATA) {
+      $("updated").textContent = fmtUpdated(get(DATA, "updated", "")) + " · offline (" + msg + ")";
+    } else if (window.__hvFail) {
+      window.__hvFail("data.json: " + msg);
+    }
+  }).then(function () { loading = false; });
+}
+
+$("btnMeal").addEventListener("click", openMealDialog);
+$("btnEvent").addEventListener("click", addCalendarEvent);
+$("btnNotify").addEventListener("click", requestNotify);
+setupMealDialog();
+load();
+setInterval(load, 30 * 60 * 1000);
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "visible") load();
 });
 </script>
 
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(regs => {
-    return Promise.all(regs.map(r => r.update()));
-  }).finally(() => {
-    navigator.serviceWorker.register('./sw.js').catch(console.error);
-  });
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" })
+    .then(function (reg) { return reg.update(); })
+    .catch(function (e) { if (window.console) console.warn("SW:", e); });
 }
-setInterval(() => { if (typeof load === 'function') load(); }, 30 * 60 * 1000);
 </script>
 </body>
 </html>
