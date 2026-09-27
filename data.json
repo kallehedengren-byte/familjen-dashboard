@@ -101,7 +101,7 @@
       {
         "date": "2026-09-28",
         "weekday": "Mån",
-        "meal": "Kycklingwok med ris"
+        "meal": "Spaghetti med köttfärssås"
       },
       {
         "date": "2026-09-29",
@@ -111,12 +111,12 @@
       {
         "date": "2026-09-30",
         "weekday": "Ons",
-        "meal": "Hamburgare med potatis"
+        "meal": "Pastagratäng med skinka"
       },
       {
         "date": "2026-10-01",
         "weekday": "Tor",
-        "meal": "Pastagratäng med skinka"
+        "meal": "Hamburgare med potatis"
       },
       {
         "date": "2026-10-02",
@@ -126,12 +126,12 @@
       {
         "date": "2026-10-03",
         "weekday": "Lör",
-        "meal": "Egen pizza"
+        "meal": "Ingen planerad"
       },
       {
         "date": "2026-10-04",
         "weekday": "Sön",
-        "meal": "Lasagne"
+        "meal": "Ingen planerad"
       }
     ],
     "note": "Inköpslista i Keep: \"Inköpslista 28 sep–4 okt\"."
