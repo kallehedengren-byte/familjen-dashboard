@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-16T06:48:53+02:00",
-  "weekLabel": "v. 42 · 12–18 oktober 2026",
-  "weekStart": "2026-10-12",
-  "weekEnd": "2026-10-18",
+  "updated": "2026-10-18T11:10:52+02:00",
+  "weekLabel": "v. 43 · 19–25 oktober 2026",
+  "weekStart": "2026-10-19",
+  "weekEnd": "2026-10-25",
   "timezone": "Europe/Stockholm",
   "family": [
     "Kalle",
@@ -12,86 +12,86 @@
     "Maj"
   ],
   "today": {
-    "date": "2026-10-16",
-    "weekday": "Fre",
-    "weekdayLong": "fredag"
+    "date": "2026-10-18",
+    "weekday": "Sön",
+    "weekdayLong": "söndag"
   },
   "weather": {
     "location": "Pershagen / Södertälje",
     "lat": 59.05,
     "lon": 17.66,
     "source": "Open-Meteo",
-    "updated": "2026-10-16T06:48:53+02:00",
+    "updated": "2026-10-18T11:10:52+02:00",
     "days": [
       {
-        "date": "2026-10-12",
+        "date": "2026-10-19",
         "weekday": "Mån",
         "tempMax": 9,
-        "tempMin": 6,
-        "summary": "Lätt regn",
-        "icon": "🌧️",
-        "precipMm": 3.4,
-        "weatherCode": 61
+        "tempMin": 0,
+        "summary": "Mulet",
+        "icon": "☁️",
+        "precipMm": 0.0,
+        "weatherCode": 3
       },
       {
-        "date": "2026-10-13",
+        "date": "2026-10-20",
         "weekday": "Tis",
         "tempMax": 10,
-        "tempMin": 6,
+        "tempMin": 1,
         "summary": "Mulet",
         "icon": "☁️",
         "precipMm": 0.0,
         "weatherCode": 3
       },
       {
-        "date": "2026-10-14",
+        "date": "2026-10-21",
         "weekday": "Ons",
         "tempMax": 11,
-        "tempMin": 6,
-        "summary": "Lätt regn",
-        "icon": "🌧️",
-        "precipMm": 7.1,
-        "weatherCode": 61
-      },
-      {
-        "date": "2026-10-15",
-        "weekday": "Tor",
-        "tempMax": 12,
-        "tempMin": 3,
-        "summary": "Mulet",
-        "icon": "☁️",
-        "precipMm": 0.0,
-        "weatherCode": 3
-      },
-      {
-        "date": "2026-10-16",
-        "weekday": "Fre",
-        "tempMax": 15,
-        "tempMin": 11,
+        "tempMin": 7,
         "summary": "Duggregn",
         "icon": "🌦️",
-        "precipMm": 1.9,
+        "precipMm": 2.4,
         "weatherCode": 53
       },
       {
-        "date": "2026-10-17",
-        "weekday": "Lör",
-        "tempMax": 11,
-        "tempMin": 4,
-        "summary": "Kraftigt duggregn",
+        "date": "2026-10-22",
+        "weekday": "Tor",
+        "tempMax": 13,
+        "tempMin": 7,
+        "summary": "Duggregn",
         "icon": "🌦️",
-        "precipMm": 2.9,
-        "weatherCode": 55
+        "precipMm": 2.1,
+        "weatherCode": 51
       },
       {
-        "date": "2026-10-18",
+        "date": "2026-10-23",
+        "weekday": "Fre",
+        "tempMax": 12,
+        "tempMin": 8,
+        "summary": "Duggregn",
+        "icon": "🌦️",
+        "precipMm": 1.5,
+        "weatherCode": 51
+      },
+      {
+        "date": "2026-10-24",
+        "weekday": "Lör",
+        "tempMax": 12,
+        "tempMin": 8,
+        "summary": "Duggregn",
+        "icon": "🌦️",
+        "precipMm": 2.0,
+        "weatherCode": 53
+      },
+      {
+        "date": "2026-10-25",
         "weekday": "Sön",
-        "tempMax": 10,
-        "tempMin": 3,
-        "summary": "Mulet",
-        "icon": "☁️",
-        "precipMm": 0.0,
-        "weatherCode": 3
+        "tempMax": 11,
+        "tempMin": 8,
+        "summary": "Duggregn",
+        "icon": "🌦️",
+        "precipMm": 5.0,
+        "weatherCode": 53
       }
     ]
   },
@@ -99,39 +99,39 @@
     "source": "Veckans Matsedel",
     "days": [
       {
-        "date": "2026-10-12",
+        "date": "2026-10-19",
         "weekday": "Mån",
-        "meal": "Pytt i panna med stekt ägg"
+        "meal": "Tortellini med krämig tomatsås"
       },
       {
-        "date": "2026-10-13",
+        "date": "2026-10-20",
         "weekday": "Tis",
-        "meal": "Laxfilé med ugnsrostad potatis och broccoli"
+        "meal": "Ugnsbakad torsk med potatis och dillsås"
       },
       {
-        "date": "2026-10-14",
+        "date": "2026-10-21",
         "weekday": "Ons",
-        "meal": "Kycklingwok med nudlar och grönsaker"
+        "meal": "Kycklingcurry med ris"
       },
       {
-        "date": "2026-10-15",
+        "date": "2026-10-22",
         "weekday": "Tor",
-        "meal": "Köttbullar med potatismos och lingon"
+        "meal": "Ärtsoppa och pannkakor"
       },
       {
-        "date": "2026-10-16",
+        "date": "2026-10-23",
         "weekday": "Fre",
         "meal": "Tacos"
       },
       {
-        "date": "2026-10-17",
+        "date": "2026-10-24",
         "weekday": "Lör",
         "meal": "Egen pizza"
       },
       {
-        "date": "2026-10-18",
+        "date": "2026-10-25",
         "weekday": "Sön",
-        "meal": "Lasagne"
+        "meal": "Kalops med potatis och rödbetor"
       }
     ],
     "status": "ok"
@@ -140,41 +140,41 @@
     "status": "ok",
     "school": "Pershagens grundskola",
     "source": "skolmaten.se",
-    "fetchedAt": "2026-10-11T11:21:47+02:00",
-    "note": "Södertälje kommun · Pershagens grundskola (v.42).",
+    "fetchedAt": "2026-10-18T11:10:52+02:00",
+    "note": "Södertälje kommun · Pershagens grundskola (v.43).",
     "days": [
       {
-        "date": "2026-10-12",
+        "date": "2026-10-19",
         "weekday": "Mån",
-        "meal": "Köttfärssås serverar med spagetti / Veg-bolognese serveras med spagetti"
+        "meal": "Köttbullar med makaroner / stuvade makaroner / Broccolipaj med spenatsallad"
       },
       {
-        "date": "2026-10-13",
+        "date": "2026-10-20",
         "weekday": "Tis",
-        "meal": "Mexikansk baljväxtgratäng med gräddfil och natchochips / Rödbetsbiffar med keso"
+        "meal": "Spenatlasagne / Linsfritters med currydipp serveras med matvete"
       },
       {
-        "date": "2026-10-14",
+        "date": "2026-10-21",
         "weekday": "Ons",
-        "meal": "Sprödbakad fisk serveras med kokt potatis Dansk remouladsås / Indisk windaloo med ris och yoghurt"
+        "meal": "Fiskgratäng med ajvar och creme fraiche / Bondomelett"
       },
       {
-        "date": "2026-10-15",
+        "date": "2026-10-22",
         "weekday": "Tor",
-        "meal": "Ärtsoppa med spiskummin och citron och krutonger / Blomkålssoppa med rostade pumpafrön / Nybakt bröd med 2 röror"
+        "meal": "Tomatsoppa serveras med mjukt bröd Färskost / Broccolisoppa"
       },
       {
-        "date": "2026-10-16",
+        "date": "2026-10-23",
         "weekday": "Fre",
-        "meal": "kyckling med citron och rosmarin serveras med klyftpotatis / Grekisk moussaka"
+        "meal": "Tacos på Daniels vis med tillbehör / Vegetarisk Tacos med tillbehör"
       },
       {
-        "date": "2026-10-17",
+        "date": "2026-10-24",
         "weekday": "Lör",
         "meal": "— (helg)"
       },
       {
-        "date": "2026-10-18",
+        "date": "2026-10-25",
         "weekday": "Sön",
         "meal": "— (helg)"
       }
@@ -182,16 +182,7 @@
   },
   "events": [
     {
-      "date": "2026-10-12",
-      "time": "08:00",
-      "end": "08:30",
-      "title": "Södertälje Naprapatcenter",
-      "who": "Kalle",
-      "cal": "Primär",
-      "source": "kallehedengren@gmail.com"
-    },
-    {
-      "date": "2026-10-12",
+      "date": "2026-10-19",
       "time": "17:00",
       "end": "18:30",
       "title": "Nils innebandy – Pershagen",
@@ -200,25 +191,7 @@
       "source": "family14584848341888094170@group.calendar.google.com"
     },
     {
-      "date": "2026-10-13",
-      "time": "17:00",
-      "end": "18:00",
-      "title": "Ebba slutar 17.00",
-      "who": "Ebba",
-      "cal": "Ebba",
-      "source": "ebbabjorneman2015@gmail.com"
-    },
-    {
-      "date": "2026-10-14",
-      "time": "14:00",
-      "end": "15:00",
-      "title": "Kyrkis",
-      "who": "Familj",
-      "cal": "Ebba",
-      "source": "ebbabjorneman2015@gmail.com"
-    },
-    {
-      "date": "2026-10-14",
+      "date": "2026-10-21",
       "time": "17:00",
       "end": "18:30",
       "title": "Nils innebandy – Östertälje",
@@ -227,7 +200,34 @@
       "source": "family14584848341888094170@group.calendar.google.com"
     },
     {
-      "date": "2026-10-15",
+      "date": "2026-10-24",
+      "time": "09:00",
+      "end": "10:30",
+      "title": "Nils fotbollsträning",
+      "who": "Nils",
+      "cal": "Family",
+      "source": "family14584848341888094170@group.calendar.google.com"
+    },
+    {
+      "date": "2026-10-21",
+      "time": "14:00",
+      "end": "15:00",
+      "title": "Kyrkis",
+      "who": "Familj",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
+    },
+    {
+      "date": "2026-10-22",
+      "time": "08:00",
+      "end": "11:30",
+      "title": "Hemstäd",
+      "who": "Ebba",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
+    },
+    {
+      "date": "2026-10-22",
       "time": "18:00",
       "end": "19:30",
       "title": "Nils fotboll",
@@ -236,89 +236,16 @@
       "source": "ebbabjorneman2015@gmail.com"
     },
     {
-      "date": "2026-10-16",
+      "date": "2026-10-25",
       "time": "13:00",
-      "end": "21:00",
-      "title": "Golf avslutning – Vidbynäs",
-      "who": "Kalle",
-      "cal": "Primär",
-      "source": "kallehedengren@gmail.com",
-      "flag": "krock"
-    },
-    {
-      "date": "2026-10-16",
-      "time": "16:00",
-      "end": "16:00",
-      "endDate": "2026-10-17",
-      "title": "Passa Maj",
-      "who": "Ebba",
-      "cal": "Ebba",
-      "source": "ebbabjorneman2015@gmail.com",
-      "flag": "krock"
-    },
-    {
-      "date": "2026-10-17",
-      "time": "09:00",
-      "end": "10:30",
-      "title": "Nils fotbollsträning",
-      "who": "Nils",
-      "cal": "Family",
-      "source": "family14584848341888094170@group.calendar.google.com",
-      "flag": "krock"
-    },
-    {
-      "date": "2026-10-18",
-      "time": "Heldag",
-      "title": "Täljemilen",
-      "who": "Ebba",
-      "cal": "Ebba",
-      "source": "ebbabjorneman2015@gmail.com",
-      "allDay": true,
-      "flag": "krock"
-    },
-    {
-      "date": "2026-10-18",
-      "time": "09:30",
       "end": "14:00",
-      "title": "Kalle Kallfors sista golf",
-      "who": "Kalle",
-      "cal": "Primär",
-      "source": "kallehedengren@gmail.com",
-      "flag": "krock"
+      "title": "Kyrkis gudstjänst",
+      "who": "Familj",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
     }
   ],
-  "alerts": [
-    {
-      "type": "krock",
-      "text": "Krock Fre 16/10: Golf avslutning – Vidbynäs (Kalle, Fre 13:00–21:00) överlappar med Passa Maj (Ebba, Fre 16:00–Lör 16:00).",
-      "date": "2026-10-16",
-      "times": "13:00 / 16:00",
-      "titles": [
-        "Golf avslutning – Vidbynäs",
-        "Passa Maj"
-      ]
-    },
-    {
-      "type": "krock",
-      "text": "Krock Lör 17/10: Passa Maj (Ebba, Fre 16:00–Lör 16:00) överlappar med Nils fotbollsträning (Nils, Lör 09:00–10:30).",
-      "date": "2026-10-17",
-      "times": "16:00 / 09:00",
-      "titles": [
-        "Passa Maj",
-        "Nils fotbollsträning"
-      ]
-    },
-    {
-      "type": "krock",
-      "text": "Krock Sön 18/10: Täljemilen (heldag 18/10) överlappar med Kalle Kallfors sista golf (Kalle, Sön 09:30–14:00).",
-      "date": "2026-10-18",
-      "times": "Heldag / 09:30",
-      "titles": [
-        "Täljemilen",
-        "Kalle Kallfors sista golf"
-      ]
-    }
-  ],
+  "alerts": [],
   "calendarsSynced": [
     "family14584848341888094170@group.calendar.google.com",
     "kallehedengren@gmail.com",
@@ -327,199 +254,199 @@
   "spotPrice": {
     "area": "SE3",
     "source": "elprisetjustnu.se",
-    "updated": "2026-10-16T06:48:53+02:00",
+    "updated": "2026-10-18T11:10:52+02:00",
     "unit": "SEK/kWh",
     "today": {
-      "date": "2026-10-16",
-      "min": 0.09708,
-      "max": 1.62252,
-      "mean": 0.84905,
+      "date": "2026-10-18",
+      "min": 0.4323,
+      "max": 1.87582,
+      "mean": 0.94165,
       "cheapest": [
         {
-          "start": "22:00",
-          "end": "24:00",
-          "price": 0.71549
+          "start": "00:00",
+          "end": "02:00",
+          "price": 0.43511
         },
         {
-          "start": "13:00",
-          "end": "15:00",
-          "price": 0.83398
+          "start": "01:00",
+          "end": "03:00",
+          "price": 0.43517
         }
       ],
       "hours": [
         {
           "hour": 0,
           "label": "00:00",
-          "mean": 0.09708,
-          "min": 0.07981,
-          "max": 0.11189
+          "mean": 0.43792,
+          "min": 0.42483,
+          "max": 0.45312
         },
         {
           "hour": 1,
           "label": "01:00",
-          "mean": 0.13525,
-          "min": 0.11189,
-          "max": 0.18309
+          "mean": 0.4323,
+          "min": 0.42283,
+          "max": 0.44065
         },
         {
           "hour": 2,
           "label": "02:00",
-          "mean": 0.17527,
-          "min": 0.12978,
-          "max": 0.223
+          "mean": 0.43803,
+          "min": 0.4265,
+          "max": 0.44923
         },
         {
           "hour": 3,
           "label": "03:00",
-          "mean": 0.2145,
-          "min": 0.13548,
-          "max": 0.28682
+          "mean": 0.43928,
+          "min": 0.41447,
+          "max": 0.46192
         },
         {
           "hour": 4,
           "label": "04:00",
-          "mean": 0.30918,
-          "min": 0.18455,
-          "max": 0.46422
+          "mean": 0.45176,
+          "min": 0.43452,
+          "max": 0.47975
         },
         {
           "hour": 5,
           "label": "05:00",
-          "mean": 0.66509,
-          "min": 0.27945,
-          "max": 0.99226
+          "mean": 0.48423,
+          "min": 0.38952,
+          "max": 0.59726
         },
         {
           "hour": 6,
           "label": "06:00",
-          "mean": 0.97734,
-          "min": 0.63144,
-          "max": 1.21872
+          "mean": 0.58876,
+          "min": 0.43786,
+          "max": 0.74552
         },
         {
           "hour": 7,
           "label": "07:00",
-          "mean": 1.13654,
-          "min": 1.08604,
-          "max": 1.18374
+          "mean": 0.81241,
+          "min": 0.66376,
+          "max": 1.03791
         },
         {
           "hour": 8,
           "label": "08:00",
-          "mean": 1.16364,
-          "min": 1.11689,
-          "max": 1.19067
+          "mean": 0.85008,
+          "min": 0.74707,
+          "max": 1.0398
         },
         {
           "hour": 9,
           "label": "09:00",
-          "mean": 0.99897,
-          "min": 0.84494,
-          "max": 1.1141
+          "mean": 0.69149,
+          "min": 0.56117,
+          "max": 0.84755
         },
         {
           "hour": 10,
           "label": "10:00",
-          "mean": 0.90379,
-          "min": 0.89423,
-          "max": 0.93246
+          "mean": 0.71079,
+          "min": 0.61597,
+          "max": 0.80488
         },
         {
           "hour": 11,
           "label": "11:00",
-          "mean": 0.93721,
-          "min": 0.90753,
-          "max": 0.95906
+          "mean": 0.76225,
+          "min": 0.69183,
+          "max": 0.84086
         },
         {
           "hour": 12,
           "label": "12:00",
-          "mean": 0.95806,
-          "min": 0.89423,
-          "max": 1.01149
+          "mean": 0.7485,
+          "min": 0.72023,
+          "max": 0.78784
         },
         {
           "hour": 13,
           "label": "13:00",
-          "mean": 0.81814,
-          "min": 0.72477,
-          "max": 0.89412
+          "mean": 0.77955,
+          "min": 0.75298,
+          "max": 0.79698
         },
         {
           "hour": 14,
           "label": "14:00",
-          "mean": 0.84983,
-          "min": 0.82347,
-          "max": 0.90887
+          "mean": 0.93949,
+          "min": 0.84554,
+          "max": 1.00961
         },
         {
           "hour": 15,
           "label": "15:00",
-          "mean": 0.98388,
-          "min": 0.93637,
-          "max": 1.07084
+          "mean": 1.36032,
+          "min": 1.06653,
+          "max": 1.49604
         },
         {
           "hour": 16,
           "label": "16:00",
-          "mean": 1.09051,
-          "min": 1.03407,
-          "max": 1.16093
+          "mean": 1.48763,
+          "min": 1.45115,
+          "max": 1.51063
         },
         {
           "hour": 17,
           "label": "17:00",
-          "mean": 1.55976,
-          "min": 1.50812,
-          "max": 1.62068
+          "mean": 1.53469,
+          "min": 1.47778,
+          "max": 1.615
         },
         {
           "hour": 18,
           "label": "18:00",
-          "mean": 1.62252,
-          "min": 1.59721,
-          "max": 1.63398
+          "mean": 1.87582,
+          "min": 1.615,
+          "max": 2.22541
         },
         {
           "hour": 19,
           "label": "19:00",
-          "mean": 1.34135,
-          "min": 1.20185,
-          "max": 1.46643
+          "mean": 1.52617,
+          "min": 1.43021,
+          "max": 1.58616
         },
         {
           "hour": 20,
           "label": "20:00",
-          "mean": 1.05815,
-          "min": 0.968,
-          "max": 1.13165
+          "mean": 1.81634,
+          "min": 1.49136,
+          "max": 2.12215
         },
         {
           "hour": 21,
           "label": "21:00",
-          "mean": 0.95004,
-          "min": 0.78346,
-          "max": 1.07867
+          "mean": 1.48541,
+          "min": 1.11376,
+          "max": 1.87242
         },
         {
           "hour": 22,
           "label": "22:00",
-          "mean": 0.8195,
-          "min": 0.63166,
-          "max": 0.99181
+          "mean": 1.04559,
+          "min": 0.7454,
+          "max": 1.38321
         },
         {
           "hour": 23,
           "label": "23:00",
-          "mean": 0.61149,
-          "min": 0.46791,
-          "max": 0.75495
+          "mean": 0.90087,
+          "min": 0.74719,
+          "max": 1.16132
         }
       ],
-      "current": 0.97734
+      "current": 0.76225
     },
     "tomorrow": {
-      "date": "2026-10-17",
+      "date": "2026-10-19",
       "available": false,
       "note": "Publiceras ca kl 13"
     }
