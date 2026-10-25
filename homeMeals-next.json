@@ -1,0 +1,12 @@
+{
+  "source": "Veckans Matsedel",
+  "days": [
+    {"date": "2026-10-26", "weekday": "Mån", "meal": "Spaghetti carbonara med bacon och ärtor"},
+    {"date": "2026-10-27", "weekday": "Tis", "meal": "Panerad sejfilé med potatismos och remouladsås"},
+    {"date": "2026-10-28", "weekday": "Ons", "meal": "Sötsur kyckling med ris"},
+    {"date": "2026-10-29", "weekday": "Tor", "meal": "Potatis- och purjolökssoppa med varma mackor"},
+    {"date": "2026-10-30", "weekday": "Fre", "meal": "Tacos"},
+    {"date": "2026-10-31", "weekday": "Lör", "meal": "Egen pizza"},
+    {"date": "2026-11-01", "weekday": "Sön", "meal": "Ugnsstekt fläskkarré med rotfrukter och gräddsås"}
+  ]
+}

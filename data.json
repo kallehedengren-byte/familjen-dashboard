@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-23T06:52:00+02:00",
-  "weekLabel": "v. 43 · 19–25 oktober 2026",
-  "weekStart": "2026-10-19",
-  "weekEnd": "2026-10-25",
+  "updated": "2026-10-25T11:09:27+01:00",
+  "weekLabel": "v. 44 · 26 oktober–1 november 2026",
+  "weekStart": "2026-10-26",
+  "weekEnd": "2026-11-01",
   "timezone": "Europe/Stockholm",
   "family": [
     "Kalle",
@@ -99,39 +99,39 @@
     "source": "Veckans Matsedel",
     "days": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-26",
         "weekday": "Mån",
-        "meal": "Tortellini med krämig tomatsås"
+        "meal": "Spaghetti carbonara med bacon och ärtor"
       },
       {
-        "date": "2026-10-20",
+        "date": "2026-10-27",
         "weekday": "Tis",
-        "meal": "Ugnsbakad torsk med potatis och dillsås"
+        "meal": "Panerad sejfilé med potatismos och remouladsås"
       },
       {
-        "date": "2026-10-21",
+        "date": "2026-10-28",
         "weekday": "Ons",
-        "meal": "Kycklingcurry med ris"
+        "meal": "Sötsur kyckling med ris"
       },
       {
-        "date": "2026-10-22",
+        "date": "2026-10-29",
         "weekday": "Tor",
-        "meal": "Ärtsoppa och pannkakor"
+        "meal": "Potatis- och purjolökssoppa med varma mackor"
       },
       {
-        "date": "2026-10-23",
+        "date": "2026-10-30",
         "weekday": "Fre",
         "meal": "Tacos"
       },
       {
-        "date": "2026-10-24",
+        "date": "2026-10-31",
         "weekday": "Lör",
         "meal": "Egen pizza"
       },
       {
-        "date": "2026-10-25",
+        "date": "2026-11-01",
         "weekday": "Sön",
-        "meal": "Kalops med potatis och rödbetor"
+        "meal": "Ugnsstekt fläskkarré med rotfrukter och gräddsås"
       }
     ],
     "status": "ok"
@@ -140,41 +140,41 @@
     "status": "ok",
     "school": "Pershagens grundskola",
     "source": "skolmaten.se",
-    "fetchedAt": "2026-10-18T11:10:52+02:00",
-    "note": "Södertälje kommun · Pershagens grundskola (v.43).",
+    "fetchedAt": "2026-10-25T11:09:27+01:00",
+    "note": "Södertälje kommun · Pershagens grundskola (v.44, höstlov).",
     "days": [
       {
-        "date": "2026-10-19",
+        "date": "2026-10-26",
         "weekday": "Mån",
-        "meal": "Köttbullar med makaroner / stuvade makaroner / Broccolipaj med spenatsallad"
+        "meal": "Pasta med ost och skinksås (Höstlov) / Pasta med svampsås"
       },
       {
-        "date": "2026-10-20",
+        "date": "2026-10-27",
         "weekday": "Tis",
-        "meal": "Spenatlasagne / Linsfritters med currydipp serveras med matvete"
+        "meal": "Kökets val / Kökets val"
       },
       {
-        "date": "2026-10-21",
+        "date": "2026-10-28",
         "weekday": "Ons",
-        "meal": "Fiskgratäng med ajvar och creme fraiche / Bondomelett"
+        "meal": "Sprödbakad fisk med remouladsås serveras med kokt potatis / Vegetariska Nuggets med remouladsås"
       },
       {
-        "date": "2026-10-22",
+        "date": "2026-10-29",
         "weekday": "Tor",
-        "meal": "Tomatsoppa serveras med mjukt bröd Färskost / Broccolisoppa"
+        "meal": "Cowboysoppa / Potatis & purjolökssoppa"
       },
       {
-        "date": "2026-10-23",
+        "date": "2026-10-30",
         "weekday": "Fre",
-        "meal": "Tacos på Daniels vis med tillbehör / Vegetarisk Tacos med tillbehör"
+        "meal": "Hamburgare med tillbehör / Vegetariska hamburgare"
       },
       {
-        "date": "2026-10-24",
+        "date": "2026-10-31",
         "weekday": "Lör",
         "meal": "— (helg)"
       },
       {
-        "date": "2026-10-25",
+        "date": "2026-11-01",
         "weekday": "Sön",
         "meal": "— (helg)"
       }
@@ -182,7 +182,7 @@
   },
   "events": [
     {
-      "date": "2026-10-19",
+      "date": "2026-10-26",
       "time": "17:00",
       "end": "18:30",
       "title": "Nils innebandy – Pershagen",
@@ -191,25 +191,16 @@
       "source": "family14584848341888094170@group.calendar.google.com"
     },
     {
-      "date": "2026-10-21",
-      "time": "17:00",
-      "end": "18:30",
-      "title": "Nils innebandy – Östertälje",
+      "date": "2026-10-27",
+      "allDay": true,
+      "time": "Heldag",
+      "title": "Nils bio med Viktor",
       "who": "Nils",
-      "cal": "Family",
-      "source": "family14584848341888094170@group.calendar.google.com"
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
     },
     {
-      "date": "2026-10-24",
-      "time": "09:00",
-      "end": "10:30",
-      "title": "Nils fotbollsträning",
-      "who": "Nils",
-      "cal": "Family",
-      "source": "family14584848341888094170@group.calendar.google.com"
-    },
-    {
-      "date": "2026-10-21",
+      "date": "2026-10-28",
       "time": "14:00",
       "end": "15:00",
       "title": "Kyrkis",
@@ -218,38 +209,30 @@
       "source": "ebbabjorneman2015@gmail.com"
     },
     {
-      "date": "2026-10-22",
+      "date": "2026-10-28",
+      "time": "17:00",
+      "end": "18:30",
+      "title": "Nils innebandy – Östertälje",
+      "who": "Nils",
+      "cal": "Family",
+      "source": "family14584848341888094170@group.calendar.google.com"
+    },
+    {
+      "date": "2026-10-29",
       "time": "08:00",
-      "end": "11:30",
-      "title": "Hemstäd",
-      "who": "Ebba",
+      "end": "09:00",
+      "endDate": "2026-11-01",
+      "title": "Höstlov (tor 08:00 – sön 09:00)",
+      "who": "Familj",
       "cal": "Ebba",
       "source": "ebbabjorneman2015@gmail.com"
     },
     {
-      "date": "2026-10-22",
+      "date": "2026-10-29",
       "time": "18:00",
       "end": "19:30",
       "title": "Nils fotboll",
       "who": "Nils",
-      "cal": "Ebba",
-      "source": "ebbabjorneman2015@gmail.com"
-    },
-    {
-      "date": "2026-10-24",
-      "time": "17:00",
-      "end": "19:00",
-      "title": "Lova R fest",
-      "who": "Familj",
-      "cal": "Ebba",
-      "source": "ebbabjorneman2015@gmail.com"
-    },
-    {
-      "date": "2026-10-25",
-      "time": "13:00",
-      "end": "14:00",
-      "title": "Kyrkis gudstjänst",
-      "who": "Familj",
       "cal": "Ebba",
       "source": "ebbabjorneman2015@gmail.com"
     }
@@ -459,5 +442,6 @@
       "available": false,
       "note": "Morgondagens priser publiceras ca 13:00"
     }
-  }
+  },
+  "conflicts": []
 }
