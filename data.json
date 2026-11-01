@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-30T06:52:00+01:00",
-  "weekLabel": "v. 44 · 26 oktober–1 november 2026",
-  "weekStart": "2026-10-26",
-  "weekEnd": "2026-11-01",
+  "updated": "2026-11-01T11:15:00+01:00",
+  "weekLabel": "v. 45 · 2–8 november 2026",
+  "weekStart": "2026-11-02",
+  "weekEnd": "2026-11-08",
   "timezone": "Europe/Stockholm",
   "family": [
     "Kalle",
@@ -12,51 +12,71 @@
     "Maj"
   ],
   "today": {
-    "date": "2026-10-30",
-    "weekday": "Fre",
-    "weekdayLong": "fredag"
+    "date": "2026-11-01",
+    "weekday": "Sön",
+    "weekdayLong": "söndag"
   },
   "weather": {
     "location": "Pershagen / Södertälje",
     "lat": 59.05,
     "lon": 17.66,
     "source": "Open-Meteo",
-    "updated": "2026-10-30T06:52:00+01:00",
+    "updated": "2026-11-01T11:15:00+01:00",
     "days": [
       {
-        "date": "2026-10-26",
+        "date": "2026-11-02",
         "weekday": "Mån",
-        "tempMax": 11,
-        "tempMin": 10,
-        "summary": "Mulet",
-        "icon": "☁️",
-        "precipMm": 0.0,
-        "weatherCode": 3
+        "tempMax": 7,
+        "tempMin": 2,
+        "summary": "Duggregn",
+        "icon": "🌦️",
+        "precipMm": 1.6,
+        "weatherCode": 51
       },
       {
-        "date": "2026-10-27",
+        "date": "2026-11-03",
         "weekday": "Tis",
-        "tempMax": 11,
-        "tempMin": 7,
+        "tempMax": 7,
+        "tempMin": 1,
         "summary": "Mulet",
         "icon": "☁️",
         "precipMm": 0.0,
         "weatherCode": 3
       },
       {
-        "date": "2026-10-28",
+        "date": "2026-11-04",
         "weekday": "Ons",
-        "tempMax": 13,
-        "tempMin": 4,
-        "summary": "Mulet",
-        "icon": "☁️",
+        "tempMax": 9,
+        "tempMin": 2,
+        "summary": "Halvklart",
+        "icon": "⛅",
         "precipMm": 0.0,
-        "weatherCode": 3
+        "weatherCode": 2
       },
       {
-        "date": "2026-10-29",
+        "date": "2026-11-05",
         "weekday": "Tor",
         "tempMax": 10,
+        "tempMin": 3,
+        "summary": "Mulet",
+        "icon": "☁️",
+        "precipMm": 0.0,
+        "weatherCode": 3
+      },
+      {
+        "date": "2026-11-06",
+        "weekday": "Fre",
+        "tempMax": 7,
+        "tempMin": 1,
+        "summary": "Mulet",
+        "icon": "☁️",
+        "precipMm": 0.0,
+        "weatherCode": 3
+      },
+      {
+        "date": "2026-11-07",
+        "weekday": "Lör",
+        "tempMax": 8,
         "tempMin": 2,
         "summary": "Mulet",
         "icon": "☁️",
@@ -64,141 +84,185 @@
         "weatherCode": 3
       },
       {
-        "date": "2026-10-30",
-        "weekday": "Fre",
-        "tempMax": 10,
-        "tempMin": 6,
-        "summary": "Mulet",
-        "icon": "☁️",
-        "precipMm": 0.0,
-        "weatherCode": 3
-      },
-      {
-        "date": "2026-10-31",
-        "weekday": "Lör",
-        "tempMax": 8,
-        "tempMin": 4,
-        "summary": "Mulet",
-        "icon": "☁️",
-        "precipMm": 0.0,
-        "weatherCode": 3
-      },
-      {
-        "date": "2026-11-01",
+        "date": "2026-11-08",
         "weekday": "Sön",
-        "tempMax": 8,
-        "tempMin": 4,
-        "summary": "Duggregn",
-        "icon": "🌦️",
-        "precipMm": 1.0,
-        "weatherCode": 51
+        "tempMax": 7,
+        "tempMin": 2,
+        "summary": "Dimma",
+        "icon": "🌫️",
+        "precipMm": 0.0,
+        "weatherCode": 45
       }
     ]
   },
   "homeMeals": {
     "source": "Veckans Matsedel",
+    "status": "ok",
     "days": [
       {
-        "date": "2026-10-26",
+        "date": "2026-11-02",
         "weekday": "Mån",
-        "meal": "Spaghetti carbonara med bacon och ärtor"
+        "meal": "Ugnsbakad falukorv med potatismos och broccoli"
       },
       {
-        "date": "2026-10-27",
+        "date": "2026-11-03",
         "weekday": "Tis",
-        "meal": "Panerad sejfilé med potatismos och remouladsås"
+        "meal": "Krämig räkpasta med tomat och spenat"
       },
       {
-        "date": "2026-10-28",
+        "date": "2026-11-04",
         "weekday": "Ons",
-        "meal": "Sötsur kyckling med ris"
+        "meal": "Panerade kycklingfiléer med klyftpotatis och tzatziki"
       },
       {
-        "date": "2026-10-29",
+        "date": "2026-11-05",
         "weekday": "Tor",
-        "meal": "Potatis- och purjolökssoppa med varma mackor"
+        "meal": "Pannbiffar med löksås, potatis och lingon"
       },
       {
-        "date": "2026-10-30",
+        "date": "2026-11-06",
         "weekday": "Fre",
         "meal": "Tacos"
       },
       {
-        "date": "2026-10-31",
+        "date": "2026-11-07",
         "weekday": "Lör",
         "meal": "Egen pizza"
       },
       {
-        "date": "2026-11-01",
+        "date": "2026-11-08",
         "weekday": "Sön",
-        "meal": "Ugnsstekt fläskkarré med rotfrukter och gräddsås"
+        "meal": "Pulled pork med coleslaw och hamburgerbröd"
       }
-    ],
-    "status": "ok"
+    ]
   },
   "schoolMeals": {
     "status": "ok",
     "school": "Pershagens grundskola",
     "source": "skolmaten.se",
-    "fetchedAt": "2026-10-25T11:09:27+01:00",
-    "note": "Södertälje kommun · Pershagens grundskola (v.44, höstlov).",
+    "fetchedAt": "2026-11-01T11:15:00+01:00",
+    "note": "Södertälje kommun · Pershagens grundskola (v.45).",
     "days": [
       {
-        "date": "2026-10-26",
+        "date": "2026-11-02",
         "weekday": "Mån",
-        "meal": "Pasta med ost och skinksås (Höstlov) / Pasta med svampsås"
+        "meal": "Skånsk kalops serveras med rödbetor och kokt potatis / Rotfruktskalops med linser och kokt potatis"
       },
       {
-        "date": "2026-10-27",
+        "date": "2026-11-03",
         "weekday": "Tis",
-        "meal": "Kökets val / Kökets val"
+        "meal": "Potatisbullar med keso och lingon / Blodpudding serveras med lingon"
       },
       {
-        "date": "2026-10-28",
+        "date": "2026-11-04",
         "weekday": "Ons",
-        "meal": "Sprödbakad fisk med remouladsås serveras med kokt potatis / Vegetariska Nuggets med remouladsås"
+        "meal": "Fiskpiccata serveras med krämig tomatsås och ris / Zuccinipiccata serveras med tomatsås och ris"
       },
       {
-        "date": "2026-10-29",
+        "date": "2026-11-05",
         "weekday": "Tor",
-        "meal": "Cowboysoppa / Potatis & purjolökssoppa"
+        "meal": "Minestronesoppa med risoni serveras med röror och nybakat bröd / Solskenssoppa(pumpa)"
       },
       {
-        "date": "2026-10-30",
+        "date": "2026-11-06",
         "weekday": "Fre",
-        "meal": "Hamburgare med tillbehör / Vegetariska hamburgare"
-      },
-      {
-        "date": "2026-10-31",
-        "weekday": "Lör",
-        "meal": "— (helg)"
-      },
-      {
-        "date": "2026-11-01",
-        "weekday": "Sön",
-        "meal": "— (helg)"
+        "meal": "Kyckling serveras med tzatziki och rostad potatis / Ugnsbakad rotselleri serveras med tzatziki och rostad potatis"
       }
     ]
   },
   "events": [
     {
-      "date": "2026-10-29",
+      "date": "2026-11-02",
+      "time": "17:00",
+      "end": "18:30",
+      "title": "Nils innebandy – Pershagen",
+      "who": "Nils",
+      "cal": "Family",
+      "source": "family14584848341888094170@group.calendar.google.com"
+    },
+    {
+      "date": "2026-11-03",
+      "time": "16:00",
+      "end": "17:00",
+      "title": "Ebba tandis",
+      "who": "Ebba",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
+    },
+    {
+      "date": "2026-11-04",
+      "time": "14:00",
+      "end": "15:00",
+      "title": "Kyrkis",
+      "who": "Nils",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
+    },
+    {
+      "date": "2026-11-04",
+      "time": "17:00",
+      "end": "18:30",
+      "title": "Nils innebandy – Östertälje",
+      "who": "Nils",
+      "cal": "Family",
+      "source": "family14584848341888094170@group.calendar.google.com"
+    },
+    {
+      "date": "2026-11-05",
       "time": "08:00",
-      "end": "09:00",
-      "endDate": "2026-11-01",
-      "title": "Höstlov (tor 08:00 – sön 09:00)",
+      "end": "11:30",
+      "title": "Hemstäd",
       "who": "Familj",
       "cal": "Ebba",
       "source": "ebbabjorneman2015@gmail.com"
     },
     {
-      "date": "2026-10-29",
+      "date": "2026-11-05",
       "time": "18:00",
       "end": "19:30",
       "title": "Nils fotboll",
       "who": "Nils",
       "cal": "Ebba",
       "source": "ebbabjorneman2015@gmail.com"
+    },
+    {
+      "date": "2026-11-06",
+      "time": "",
+      "end": "",
+      "title": "Middag m Flensburgs",
+      "who": "Familj",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com",
+      "allDay": true
+    },
+    {
+      "date": "2026-11-07",
+      "time": "",
+      "end": "",
+      "title": "Städdag i samfälligheten",
+      "who": "Familj",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com",
+      "allDay": true
+    },
+    {
+      "date": "2026-11-07",
+      "time": "16:00",
+      "end": "17:00",
+      "title": "Middag med Robin och Lisa",
+      "who": "Familj",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com"
+    },
+    {
+      "date": "2026-11-08",
+      "time": "",
+      "end": "",
+      "title": "Farsdag",
+      "who": "Familj",
+      "cal": "Ebba",
+      "source": "ebbabjorneman2015@gmail.com",
+      "allDay": true
     }
   ],
   "alerts": [],
