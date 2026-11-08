@@ -1,8 +1,41 @@
-{"week":45,"range":"2–8 nov 2026","meals":[
-{"day":"Mån","date":"2026-11-02","meal":"Ugnsbakad falukorv med potatismos och broccoli"},
-{"day":"Tis","date":"2026-11-03","meal":"Krämig räkpasta med tomat och spenat"},
-{"day":"Ons","date":"2026-11-04","meal":"Panerade kycklingfiléer med klyftpotatis och tzatziki"},
-{"day":"Tor","date":"2026-11-05","meal":"Pannbiffar med löksås, potatis och lingon"},
-{"day":"Fre","date":"2026-11-06","meal":"Tacos"},
-{"day":"Lör","date":"2026-11-07","meal":"Egen pizza"},
-{"day":"Sön","date":"2026-11-08","meal":"Pulled pork med coleslaw och hamburgerbröd"}]}
+{
+  "week": 46,
+  "range": "9–15 nov 2026",
+  "meals": [
+    {
+      "day": "Mån",
+      "date": "2026-11-09",
+      "meal": "Flygande Jacob med ris"
+    },
+    {
+      "day": "Tis",
+      "date": "2026-11-10",
+      "meal": "Ugnsbakad lax med honung och senap, kokt potatis och broccoli"
+    },
+    {
+      "day": "Ons",
+      "date": "2026-11-11",
+      "meal": "Kassler med stuvade makaroner och gurksallad"
+    },
+    {
+      "day": "Tor",
+      "date": "2026-11-12",
+      "meal": "Ugnspannkaka med bacon och rårörda lingon"
+    },
+    {
+      "day": "Fre",
+      "date": "2026-11-13",
+      "meal": "Tacos"
+    },
+    {
+      "day": "Lör",
+      "date": "2026-11-14",
+      "meal": "Egen pizza"
+    },
+    {
+      "day": "Sön",
+      "date": "2026-11-15",
+      "meal": "Ugnsstekt kyckling med potatisgratäng och honungsrostade morötter"
+    }
+  ]
+}
