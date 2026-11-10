@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T06:51:53+01:00",
+  "updated": "2026-11-10T06:50:12+01:00",
   "weekLabel": "v. 46 · 9–15 november 2026",
   "weekStart": "2026-11-09",
   "weekEnd": "2026-11-15",
@@ -12,16 +12,16 @@
     "Maj"
   ],
   "today": {
-    "date": "2026-11-09",
-    "weekday": "Mån",
-    "weekdayLong": "måndag"
+    "date": "2026-11-10",
+    "weekday": "Tis",
+    "weekdayLong": "tisdag"
   },
   "weather": {
     "location": "Pershagen / Södertälje",
     "lat": 59.05,
     "lon": 17.66,
     "source": "Open-Meteo",
-    "updated": "2026-11-09T06:51:53+01:00",
+    "updated": "2026-11-10T06:50:12+01:00",
     "days": [
       {
         "date": "2026-11-09",
@@ -37,10 +37,10 @@
         "date": "2026-11-10",
         "weekday": "Tis",
         "tempMax": 5,
-        "tempMin": 2,
+        "tempMin": 3,
         "summary": "Duggregn",
         "icon": "🌦️",
-        "precipMm": 0.1,
+        "precipMm": 0.6,
         "weatherCode": 51
       },
       {
@@ -50,34 +50,34 @@
         "tempMin": 3,
         "summary": "Duggregn",
         "icon": "🌦️",
-        "precipMm": 1.6,
+        "precipMm": 2.0,
         "weatherCode": 51
       },
       {
         "date": "2026-11-12",
         "weekday": "Tor",
-        "tempMax": 4,
-        "tempMin": -2,
-        "summary": "Duggregn",
-        "icon": "🌦️",
-        "precipMm": 0.1,
-        "weatherCode": 51
+        "tempMax": 5,
+        "tempMin": 1,
+        "summary": "Snöbyar",
+        "icon": "🌨️",
+        "precipMm": 4.2,
+        "weatherCode": 85
       },
       {
         "date": "2026-11-13",
         "weekday": "Fre",
-        "tempMax": 1,
-        "tempMin": -2,
-        "summary": "Snö",
+        "tempMax": 2,
+        "tempMin": -1,
+        "summary": "Snöbyar",
         "icon": "🌨️",
-        "precipMm": 2.1,
-        "weatherCode": 73
+        "precipMm": 0.9,
+        "weatherCode": 85
       },
       {
         "date": "2026-11-14",
         "weekday": "Lör",
         "tempMax": 4,
-        "tempMin": -3,
+        "tempMin": -2,
         "summary": "Halvklart",
         "icon": "⛅",
         "precipMm": 0.0,
@@ -86,8 +86,8 @@
       {
         "date": "2026-11-15",
         "weekday": "Sön",
-        "tempMax": 7,
-        "tempMin": -1,
+        "tempMax": 8,
+        "tempMin": 1,
         "summary": "Mulet",
         "icon": "☁️",
         "precipMm": 0.0,
@@ -226,199 +226,199 @@
   "spotPrice": {
     "area": "SE3",
     "source": "elprisetjustnu.se",
-    "updated": "2026-11-09T06:51:53+01:00",
+    "updated": "2026-11-10T06:50:12+01:00",
     "unit": "SEK/kWh",
     "today": {
-      "date": "2026-11-09",
-      "min": 1.68905,
-      "max": 4.78913,
-      "mean": 2.75665,
+      "date": "2026-11-10",
+      "min": 1.15492,
+      "max": 5.48747,
+      "mean": 3.02579,
       "cheapest": [
         {
-          "start": "03:00",
-          "end": "05:00",
-          "price": 1.78639
+          "start": "02:00",
+          "end": "04:00",
+          "price": 1.18608
         },
         {
-          "start": "01:00",
-          "end": "03:00",
-          "price": 1.80487
+          "start": "00:00",
+          "end": "02:00",
+          "price": 1.18957
         }
       ],
       "hours": [
         {
           "hour": 0,
           "label": "00:00",
-          "mean": 1.87582,
-          "min": 1.81615,
-          "max": 1.91689
+          "mean": 1.18721,
+          "min": 1.15492,
+          "max": 1.20911
         },
         {
           "hour": 1,
           "label": "01:00",
-          "mean": 1.81199,
-          "min": 1.78041,
-          "max": 1.853
+          "mean": 1.19193,
+          "min": 1.17085,
+          "max": 1.22801
         },
         {
           "hour": 2,
           "label": "02:00",
-          "mean": 1.79776,
-          "min": 1.79442,
-          "max": 1.80093
+          "mean": 1.18704,
+          "min": 1.16536,
+          "max": 1.19987
         },
         {
           "hour": 3,
           "label": "03:00",
-          "mean": 1.80843,
-          "min": 1.76728,
-          "max": 1.86029
+          "mean": 1.18511,
+          "min": 1.17712,
+          "max": 1.19471
         },
         {
           "hour": 4,
           "label": "04:00",
-          "mean": 1.76436,
-          "min": 1.68905,
-          "max": 1.83668
+          "mean": 1.21419,
+          "min": 1.18185,
+          "max": 1.23867
         },
         {
           "hour": 5,
           "label": "05:00",
-          "mean": 1.87267,
-          "min": 1.71013,
-          "max": 2.08922
+          "mean": 1.31842,
+          "min": 1.2068,
+          "max": 1.42894
         },
         {
           "hour": 6,
           "label": "06:00",
-          "mean": 2.391,
-          "min": 2.21323,
-          "max": 2.57699
+          "mean": 2.5261,
+          "min": 2.1277,
+          "max": 2.86569
         },
         {
           "hour": 7,
           "label": "07:00",
-          "mean": 2.94985,
-          "min": 2.8238,
-          "max": 3.16373
+          "mean": 3.38885,
+          "min": 3.14049,
+          "max": 3.60973
         },
         {
           "hour": 8,
           "label": "08:00",
-          "mean": 3.11805,
-          "min": 2.97396,
-          "max": 3.39741
+          "mean": 3.97579,
+          "min": 3.6471,
+          "max": 4.22121
         },
         {
           "hour": 9,
           "label": "09:00",
-          "mean": 2.99049,
-          "min": 2.81972,
-          "max": 3.11629
+          "mean": 3.81014,
+          "min": 3.76966,
+          "max": 3.85331
         },
         {
           "hour": 10,
           "label": "10:00",
-          "mean": 2.84102,
-          "min": 2.65092,
-          "max": 3.08165
+          "mean": 3.43391,
+          "min": 3.17093,
+          "max": 3.84463
         },
         {
           "hour": 11,
           "label": "11:00",
-          "mean": 2.68906,
-          "min": 2.51565,
-          "max": 2.80207
+          "mean": 3.3129,
+          "min": 3.06805,
+          "max": 3.83111
         },
         {
           "hour": 12,
           "label": "12:00",
-          "mean": 2.67974,
-          "min": 2.4104,
-          "max": 2.88195
+          "mean": 3.38308,
+          "min": 3.00056,
+          "max": 3.86661
         },
         {
           "hour": 13,
           "label": "13:00",
-          "mean": 2.65795,
-          "min": 2.47681,
-          "max": 3.10007
+          "mean": 3.5437,
+          "min": 3.21358,
+          "max": 3.94344
         },
         {
           "hour": 14,
           "label": "14:00",
-          "mean": 2.95444,
-          "min": 2.38039,
-          "max": 3.38042
+          "mean": 3.57742,
+          "min": 3.37011,
+          "max": 3.81627
         },
         {
           "hour": 15,
           "label": "15:00",
-          "mean": 4.00412,
-          "min": 3.7647,
-          "max": 4.17392
+          "mean": 4.55044,
+          "min": 4.22385,
+          "max": 5.36733
         },
         {
           "hour": 16,
           "label": "16:00",
-          "mean": 3.96195,
-          "min": 3.32603,
-          "max": 4.43232
+          "mean": 5.11287,
+          "min": 4.86148,
+          "max": 5.48747
         },
         {
           "hour": 17,
           "label": "17:00",
-          "mean": 4.76309,
-          "min": 4.7301,
-          "max": 4.78913
+          "mean": 5.03101,
+          "min": 4.89644,
+          "max": 5.21751
         },
         {
           "hour": 18,
           "label": "18:00",
-          "mean": 4.17632,
-          "min": 4.06116,
-          "max": 4.40672
+          "mean": 4.73271,
+          "min": 4.44203,
+          "max": 5.0545
         },
         {
           "hour": 19,
           "label": "19:00",
-          "mean": 3.55574,
-          "min": 3.24185,
-          "max": 4.05995
+          "mean": 4.10708,
+          "min": 3.83385,
+          "max": 4.23352
         },
         {
           "hour": 20,
           "label": "20:00",
-          "mean": 2.91507,
-          "min": 2.6123,
-          "max": 3.15965
+          "mean": 3.5864,
+          "min": 3.09773,
+          "max": 3.89475
         },
         {
           "hour": 21,
           "label": "21:00",
-          "mean": 2.40885,
-          "min": 2.22537,
-          "max": 2.53176
+          "mean": 2.85967,
+          "min": 2.61464,
+          "max": 3.08212
         },
         {
           "hour": 22,
           "label": "22:00",
-          "mean": 2.26548,
-          "min": 2.14604,
-          "max": 2.37719
+          "mean": 2.3569,
+          "min": 2.14737,
+          "max": 2.61057
         },
         {
           "hour": 23,
           "label": "23:00",
-          "mean": 1.90627,
-          "min": 1.73561,
-          "max": 2.09308
+          "mean": 2.04608,
+          "min": 1.88269,
+          "max": 2.16034
         }
       ],
-      "current": 2.57699
+      "current": 2.86569
     },
     "tomorrow": {
-      "date": "2026-11-10",
+      "date": "2026-11-11",
       "available": false,
       "note": "Morgondagens priser publiceras ca 13:00"
     }
