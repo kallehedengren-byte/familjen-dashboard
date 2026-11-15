@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-15T10:49:42+01:00",
+  "updated": "2026-11-15T11:23:35+01:00",
   "weekLabel": "v. 47 · 16–22 november 2026",
   "weekStart": "2026-11-16",
   "weekEnd": "2026-11-22",
@@ -21,7 +21,7 @@
     "lat": 59.05,
     "lon": 17.66,
     "source": "Open-Meteo",
-    "updated": "2026-11-15T10:49:42+01:00",
+    "updated": "2026-11-15T11:23:35+01:00",
     "days": [
       {
         "date": "2026-11-16",
@@ -30,7 +30,7 @@
         "tempMin": 4,
         "summary": "Lätt regn",
         "icon": "🌧️",
-        "precipMm": 9.6,
+        "precipMm": 10.4,
         "weatherCode": 61
       },
       {
@@ -40,15 +40,15 @@
         "tempMin": 1,
         "summary": "Duggregn",
         "icon": "🌦️",
-        "precipMm": 0.7,
-        "weatherCode": 51
+        "precipMm": 3.0,
+        "weatherCode": 53
       },
       {
         "date": "2026-11-18",
         "weekday": "Ons",
         "tempMax": 1,
         "tempMin": -4,
-        "summary": "Duggregn",
+        "summary": "Lätt duggregn",
         "icon": "🌦️",
         "precipMm": 0.1,
         "weatherCode": 51
@@ -140,7 +140,7 @@
     "status": "ok",
     "school": "Pershagens grundskola",
     "source": "skolmaten.se",
-    "fetchedAt": "2026-11-15T10:49:42+01:00",
+    "fetchedAt": "2026-11-15T11:23:35+01:00",
     "note": "Södertälje kommun · Pershagens grundskola (v.47).",
     "days": [
       {
@@ -294,7 +294,7 @@
   "spotPrice": {
     "area": "SE3",
     "source": "elprisetjustnu.se",
-    "updated": "2026-11-15T10:49:42+01:00",
+    "updated": "2026-11-15T11:23:35+01:00",
     "unit": "SEK/kWh",
     "today": {
       "date": "2026-11-15",
@@ -483,7 +483,7 @@
           "max": 0.9076
         }
       ],
-      "current": 0.48406
+      "current": 0.47824
     },
     "tomorrow": {
       "date": "2026-11-16",
