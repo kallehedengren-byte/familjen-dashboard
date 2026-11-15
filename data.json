@@ -97,43 +97,42 @@
   },
   "homeMeals": {
     "source": "Veckans Matsedel",
-    "status": "pending",
-    "note": "Hemmamatsedel för v.47 saknas ännu — be Veckans Matsedel om menyn.",
+    "status": "ok",
     "days": [
       {
         "date": "2026-11-16",
         "weekday": "Mån",
-        "meal": "Ingen planerad"
+        "meal": "Krämig kycklingpasta med pesto och spenat"
       },
       {
         "date": "2026-11-17",
         "weekday": "Tis",
-        "meal": "Ingen planerad"
+        "meal": "Ugnsbakad torsk med äggsås, dill och kokt potatis"
       },
       {
         "date": "2026-11-18",
         "weekday": "Ons",
-        "meal": "Ingen planerad"
+        "meal": "Mild chili con carne med ris och gräddfil"
       },
       {
         "date": "2026-11-19",
         "weekday": "Tor",
-        "meal": "Ingen planerad"
+        "meal": "Raggmunk med rimmat fläsk och lingon"
       },
       {
         "date": "2026-11-20",
         "weekday": "Fre",
-        "meal": "Ingen planerad"
+        "meal": "Tacos"
       },
       {
         "date": "2026-11-21",
         "weekday": "Lör",
-        "meal": "Ingen planerad"
+        "meal": "Egen pizza"
       },
       {
         "date": "2026-11-22",
         "weekday": "Sön",
-        "meal": "Ingen planerad"
+        "meal": "Långkokt nötgryta med potatismos"
       }
     ]
   },

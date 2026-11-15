@@ -1,41 +1,41 @@
 {
-  "week": 46,
-  "range": "9–15 nov 2026",
+  "week": 47,
+  "range": "16–22 nov 2026",
   "meals": [
     {
       "day": "Mån",
-      "date": "2026-11-09",
-      "meal": "Flygande Jacob med ris"
+      "date": "2026-11-16",
+      "meal": "Krämig kycklingpasta med pesto och spenat"
     },
     {
       "day": "Tis",
-      "date": "2026-11-10",
-      "meal": "Ugnsbakad lax med honung och senap, kokt potatis och broccoli"
+      "date": "2026-11-17",
+      "meal": "Ugnsbakad torsk med äggsås, dill och kokt potatis"
     },
     {
       "day": "Ons",
-      "date": "2026-11-11",
-      "meal": "Kassler med stuvade makaroner och gurksallad"
+      "date": "2026-11-18",
+      "meal": "Mild chili con carne med ris och gräddfil"
     },
     {
       "day": "Tor",
-      "date": "2026-11-12",
-      "meal": "Ugnspannkaka med bacon och rårörda lingon"
+      "date": "2026-11-19",
+      "meal": "Raggmunk med rimmat fläsk och lingon"
     },
     {
       "day": "Fre",
-      "date": "2026-11-13",
+      "date": "2026-11-20",
       "meal": "Tacos"
     },
     {
       "day": "Lör",
-      "date": "2026-11-14",
+      "date": "2026-11-21",
       "meal": "Egen pizza"
     },
     {
       "day": "Sön",
-      "date": "2026-11-15",
-      "meal": "Ugnsstekt kyckling med potatisgratäng och honungsrostade morötter"
+      "date": "2026-11-22",
+      "meal": "Långkokt nötgryta med potatismos"
     }
   ]
 }
