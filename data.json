@@ -97,43 +97,43 @@
   },
   "homeMeals": {
     "source": "Veckans Matsedel",
-    "status": "pending",
-    "note": "Hemmamatsedel för v.48 saknas ännu — be Veckans Matsedel om menyn.",
+    "status": "ok",
+    "note": "",
     "days": [
       {
         "date": "2026-11-23",
         "weekday": "Mån",
-        "meal": "Ingen planerad"
+        "meal": "Korv stroganoff med ris"
       },
       {
         "date": "2026-11-24",
         "weekday": "Tis",
-        "meal": "Ingen planerad"
+        "meal": "Krämig fiskgryta med lax, sej och räkor, med ris"
       },
       {
         "date": "2026-11-25",
         "weekday": "Ons",
-        "meal": "Ingen planerad"
+        "meal": "Kyckling teriyaki med ris och broccoli"
       },
       {
         "date": "2026-11-26",
         "weekday": "Tor",
-        "meal": "Ingen planerad"
+        "meal": "Gnocchi med krämig tomatsås och salsiccia"
       },
       {
         "date": "2026-11-27",
         "weekday": "Fre",
-        "meal": "Ingen planerad"
+        "meal": "Tacos"
       },
       {
         "date": "2026-11-28",
         "weekday": "Lör",
-        "meal": "Ingen planerad"
+        "meal": "Egen pizza"
       },
       {
         "date": "2026-11-29",
         "weekday": "Sön",
-        "meal": "Ingen planerad"
+        "meal": "Helstekt fläskfilé med hasselbackspotatis och svampsås"
       }
     ]
   },
